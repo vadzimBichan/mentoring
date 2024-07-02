@@ -21,6 +21,9 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Visual Studio cache/options directory
+.vs/
+
 # MSTest
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
