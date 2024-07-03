@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ApiSteps\" />
+    <Folder Include="UiSteps\" />
+  </ItemGroup>
+
 </Project>
