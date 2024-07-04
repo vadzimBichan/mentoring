@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <Folder Include="ApiSteps\" />
+    <Folder Include="UiObjects\Components\" />
+    <Folder Include="UiObjects\Pages\" />
+    <Folder Include="UiSteps\" />
   </ItemGroup>
 
   <ItemGroup>
