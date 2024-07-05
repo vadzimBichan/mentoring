@@ -9,11 +9,17 @@ public class TestConfiguration
     public string Password { get; private init; }
     public string BrowserType { get; private init; }
 
-    public static TestConfiguration GetConfiguration()
+    private static readonly JsonDocument settingsJson;
+
+    static TestConfiguration()
     {
         var json = File.ReadAllText("appsettings.json");
-        var jsonDoc = JsonDocument.Parse(json);
-        var root = jsonDoc.RootElement;
+        settingsJson = JsonDocument.Parse(json);
+    }
+
+    public static TestConfiguration GetConfiguration()
+    {
+        var root = settingsJson.RootElement;
 
         return new TestConfiguration
         {
