@@ -9,5 +9,5 @@ public class LoginPage : BaseWebPage
 
     public IWebElement PasswordTextbox => Driver.FindElement(By.CssSelector("input[type='password'][placeholder='Password']"));
 
-    public IWebElement LoginButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Login')]"));
+    public IWebElement LoginButton => Driver.FindElement(By.CssSelector("div[class*='loginForm__login-button-container']>button"));
 }
