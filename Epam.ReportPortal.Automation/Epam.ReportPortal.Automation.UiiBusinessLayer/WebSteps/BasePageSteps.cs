@@ -1,5 +1,4 @@
-﻿using Epam.ReportPortal.Automation.Configuration.Logger;
-using Epam.ReportPortal.Automation.CoreSelenium.Base;
+﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using log4net;
 using NUnit.Framework;
 
