@@ -6,12 +6,14 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
 {
     public void OpenAllDashboardsPage()
     {
+        Log.Info("Opening all dashboards");
         WebPage.LeftPanel.DashboardsItem.Click();
         WebPage.WaitTillPageLoad();
     }
 
     public void CreateDashboard(string dashboardName, string dashboardDescription)
     {
+        Log.Info("Creating new dashboard");
         WebPage.AddNewDashboardButton.Click();
         WebPage.NameTextbox.SendKeys(dashboardName);
         WebPage.DescriptionTextbox.SendKeys(dashboardDescription);

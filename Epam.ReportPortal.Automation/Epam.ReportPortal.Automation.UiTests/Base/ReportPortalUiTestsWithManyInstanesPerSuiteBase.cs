@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+﻿using Epam.ReportPortal.Automation.Configuration.Logger;
+using Epam.ReportPortal.Automation.Configuration.Settings;
 using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
 
@@ -15,6 +16,7 @@ public abstract class ReportPortalUiTestsWithManyInstancesPerSuiteBase
     public void BeforeEach()
     {
         TestConfiguration = TestConfiguration.GetConfiguration();
+        LogConfiguration.Setup();
         Browser = Browser.GetInstance;
     }
 

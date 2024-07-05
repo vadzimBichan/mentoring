@@ -1,4 +1,6 @@
-﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+﻿using Epam.ReportPortal.Automation.Configuration.Logger;
+using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using log4net;
 using NUnit.Framework;
 
 namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps;
@@ -6,6 +8,8 @@ namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps;
 public abstract class BasePageSteps<T> where T : BaseWebPage, new()
 {
     protected T WebPage { get; } = new();
+
+    protected static readonly ILog Log = LogManager.GetLogger(typeof(T));
 
     public void ValidatePageTitle(string expectedTitle)
     {
