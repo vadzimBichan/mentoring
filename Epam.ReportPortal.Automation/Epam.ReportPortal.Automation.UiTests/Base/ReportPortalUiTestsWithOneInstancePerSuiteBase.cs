@@ -1,20 +1,26 @@
-﻿namespace Epam.ReportPortal.Automation.UiTests.Base
+﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+
+namespace Epam.ReportPortal.Automation.UiTests.Base;
+
+[TestFixture]
+public abstract class ReportPortalUiTestsWithOneInstancePerSuiteBase
 {
-    [TestFixture]
-    public abstract class ReportPortalUiTestsWithOneInstancePerSuiteBase
+    protected Browser Browser;
+    protected TestConfiguration TestConfiguration;
+    protected LoginPageSteps LoginPageSteps => new();
+
+    [OneTimeSetUp]
+    public void BeforeAll()
     {
-        protected WebSteps WebSteps;
+        TestConfiguration = TestConfiguration.GetConfiguration();
+        Browser = Browser.GetInstance;
+    }
 
-        [OneTimeSetUp]
-        public void BeforeAll()
-        {
-            WebSteps = new WebSteps();
-        }
-
-        [OneTimeTearDown]
-        public void AfterAll()
-        {
-            // WebSteps.BrowserSteps.CloseBrowser();
-        }
+    [OneTimeTearDown]
+    public void AfterAll()
+    {
+        Browser.Close();
     }
 }

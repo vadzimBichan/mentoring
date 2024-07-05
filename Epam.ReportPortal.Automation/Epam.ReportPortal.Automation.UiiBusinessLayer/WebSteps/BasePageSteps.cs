@@ -1,26 +1,19 @@
-﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using NUnit.Framework;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps
+namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps;
+
+public abstract class BasePageSteps<T> where T : BaseWebPage, new()
 {
-    public abstract class BasePageSteps
+    protected T WebPage { get; } = new();
+
+    public void ValidatePageTitle(string expectedTitle)
     {
-        public readonly TestConfiguration Config;
+        Assert.That(WebPage.GetTitle(), Is.EqualTo(expectedTitle), "Unexpected page title");
+    }
 
-        protected BasePageSteps(TestConfiguration config)
-        {
-            Config = config;
-        }
-
-        public void ValidatePageTitle(string expectedTitle)
-        {
-            // Assert.That(Browser.GetTitle(), Is.EqualTo(expectedTitle), "Unexpected page title");
-        }
-
-        public void ValidatePageUrl(string expectedUrl)
-        {
-            // Assert.That(Browser.GetUrl(), Is.EqualTo(expectedUrl), "Unexpected page url");
-        }
-
-        // TODO: add browser steps
+    public void ValidatePageUrl(string expectedUrl)
+    {
+        Assert.That(WebPage.GetUrl(), Is.EqualTo(expectedUrl), "Unexpected page url");
     }
 }

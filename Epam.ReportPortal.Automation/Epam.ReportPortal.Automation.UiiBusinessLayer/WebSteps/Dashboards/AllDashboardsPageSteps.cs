@@ -1,46 +1,37 @@
-﻿using Epam.ReportPortal.Automation.Configuration.Settings;
-using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards
+namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+
+public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
 {
-    public class AllDashboardsPageSteps : BasePageSteps
+    public void OpenAllDashboardsPage()
     {
-        private AllDashboardsPage _allDashboardsPage;
+        WebPage.LeftPanel.DashboardsItem.Click();
+        WebPage.WaitTillPageLoad();
+    }
 
-        public AllDashboardsPageSteps(TestConfiguration config) : base(config)
+    public void CreateDashboard(string dashboardName, string dashboardDescription)
+    {
+        WebPage.AddNewDashboardButton.Click();
+        WebPage.NameTextbox.SendKeys(dashboardName);
+        WebPage.DescriptionTextbox.SendKeys(dashboardDescription);
+        WebPage.AddButton.Click();
+        WebPage.WaitTillPageLoad();
+    }
+
+    public List<string> GetDashboards()
+    {
+        var dashboards = new List<string>();
+        foreach (var dashboard in WebPage.DashboardsList)
         {
-            _allDashboardsPage = new AllDashboardsPage(config);
-        }
-        
-        public void OpenAllDashboardsPage()
-        {
-            _allDashboardsPage.LeftPanel.DashboardsItem.Click();
-
-            Thread.Sleep(1000);
-        }
-
-        public List<string> GetDashboards()
-        {
-            var dashboards = new List<string>();
-            foreach (var dashboard in _allDashboardsPage.DashboardsList)
-            {
-                dashboards.Add(dashboard.Text);
-            }
-
-            return dashboards;
+            dashboards.Add(dashboard.Text);
         }
 
-        public int GetDashboardsCount()
-        {
-            return GetDashboards().Count;
-        }
+        return dashboards;
+    }
 
-        public void CreateDashboard(string dashboardName, string dashboardDescription)
-        {
-            _allDashboardsPage.AddNewDashboardButton.Click();
-            _allDashboardsPage.NameTextbox.SendKeys(dashboardName); 
-            _allDashboardsPage.DescriptionTextbox.SendKeys(dashboardDescription);
-            _allDashboardsPage.AddButton.Click();
-        }
+    public int GetDashboardsCount()
+    {
+        return GetDashboards().Count;
     }
 }

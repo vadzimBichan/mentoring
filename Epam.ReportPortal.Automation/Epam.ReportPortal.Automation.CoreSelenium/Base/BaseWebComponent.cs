@@ -8,19 +8,8 @@ public abstract class BaseWebComponent
 
     public abstract IWebElement Root { get; }
 
-    // Initialize WebDriver based on the Browser selection 
-    protected BaseWebComponent(Configuration.Settings.TestConfiguration config)
+    protected BaseWebComponent()
     {
-        switch (config.BrowserType)
-        {
-            case "Chrome":
-                Driver = ChromeDriverSingleton.Instance;
-                break;
-            case "Firefox":
-                Driver = FirefoxDriverSingleton.Instance;
-                break;
-            default:
-                throw new Exception("The browser is not supported");
-        }
+        Driver = Browser.GetInstance.Driver;
     }
 }

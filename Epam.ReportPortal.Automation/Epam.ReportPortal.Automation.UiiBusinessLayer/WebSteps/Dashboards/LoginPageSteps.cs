@@ -1,35 +1,26 @@
 ﻿using Epam.ReportPortal.Automation.Configuration.Settings;
 using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards
+namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+
+public class LoginPageSteps : BasePageSteps<LoginPage>
 {
-    public class LoginPageSteps : BasePageSteps
+    public void OpenLoginPage()
     {
-        private readonly LoginPage _loginPage;
+        WebPage.Open(TestConfiguration.GetConfiguration().Url + "/login");
+    }
 
-        public LoginPageSteps(TestConfiguration config) : base(config)
-        {
-            _loginPage = new LoginPage(config);
-        }
-        
-        public void OpenLoginPage()
-        {
-            _loginPage.Driver.Navigate().GoToUrl(Config.Url+ "/login");
-        }
+    public void LoginWithCredentials(string login, string password)
+    {
+        WebPage.LoginTextbox.SendKeys(login);
+        WebPage.PasswordTextbox.SendKeys(password);
+        WebPage.LoginButton.Click();
+        WebPage.WaitTillPageLoad();
+        WebPage.WaitTillAjaxLoad();
+    }
 
-        public void LoginWithCredentials(string login, string password)
-        {
-            _loginPage.LoginTextbox.SendKeys(login);
-            _loginPage.PasswordTextbox.SendKeys(password);
-            _loginPage.LoginButton.Click();
-
-            Thread.Sleep(1000);
-        }
-
-        public void ClickForgotPasswordLink()
-        {
-            // TODO
-        }
-
+    public void ClickForgotPasswordLink()
+    {
+        throw new NotImplementedException("TODO: Not implemented!");
     }
 }

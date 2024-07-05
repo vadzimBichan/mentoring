@@ -4,12 +4,11 @@ public class DashboardsApiSteps : BaseApiSteps
 {
     public List<string> GetDashboards()
     {
-        // TODO
-        return null;
+        throw new NotImplementedException("TODO: Not implemented!");
     }
 
     public int GetDashboardsCount()
     {
-        return GetDashboards().Count;
+        return -1;
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Epam.ReportPortal.Automation.UiTests.Base;
 
-namespace Epam.ReportPortal.Automation.UiTests.Dashboards
+namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
+
+public class EditDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
 {
-    public class EditDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
-    {
-    }
 }

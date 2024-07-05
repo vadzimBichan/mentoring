@@ -1,27 +1,15 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
 public abstract class BaseWebPage
 {
-    public readonly IWebDriver Driver; 
+    public readonly IWebDriver Driver;
 
-    protected BaseWebPage(Configuration.Settings.TestConfiguration config)
+    protected BaseWebPage()
     {
-        switch (config.BrowserType)
-        {
-            case "Chrome":
-                Driver = ChromeDriverSingleton.Instance;
-                break;
-            case "Firefox":
-                Driver = FirefoxDriverSingleton.Instance;
-                break;
-            default:
-                throw new Exception("The browser is not supported");
-        }
+        Driver = Browser.GetInstance.Driver;
     }
 
     public string GetUrl()
@@ -68,9 +56,9 @@ public abstract class BaseWebPage
         return this;
     }
 
-    public void CloseCurrentTab()
+    public void Close()
     {
-        Driver.Close();
+        Driver.Quit();
     }
 
     /// <summary>
