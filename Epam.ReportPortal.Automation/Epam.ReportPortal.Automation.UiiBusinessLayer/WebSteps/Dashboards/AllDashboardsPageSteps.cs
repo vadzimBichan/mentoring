@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
 
 namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards
 {
@@ -6,26 +7,40 @@ namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards
     {
         private AllDashboardsPage _allDashboardsPage;
 
-        public AllDashboardsPageSteps(Browser browser) : base(browser)
+        public AllDashboardsPageSteps(TestConfiguration config) : base(config)
         {
-            _allDashboardsPage = new AllDashboardsPage(browser);
+            _allDashboardsPage = new AllDashboardsPage(config);
         }
         
         public void OpenAllDashboardsPage()
         {
-            // TODO
+            _allDashboardsPage.LeftPanel.DashboardsItem.Click();
+
+            Thread.Sleep(1000);
         }
 
         public List<string> GetDashboards()
         {
-            // TODO
-            return null;
+            var dashboards = new List<string>();
+            foreach (var dashboard in _allDashboardsPage.DashboardsList)
+            {
+                dashboards.Add(dashboard.Text);
+            }
+
+            return dashboards;
         }
 
         public int GetDashboardsCount()
         {
-            // TODO
-            return -1;
+            return GetDashboards().Count;
+        }
+
+        public void CreateDashboard(string dashboardName, string dashboardDescription)
+        {
+            _allDashboardsPage.AddNewDashboardButton.Click();
+            _allDashboardsPage.NameTextbox.SendKeys(dashboardName); 
+            _allDashboardsPage.DescriptionTextbox.SendKeys(dashboardDescription);
+            _allDashboardsPage.AddButton.Click();
         }
     }
 }

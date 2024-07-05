@@ -1,19 +1,22 @@
-﻿namespace Epam.ReportPortal.Automation.UiTests.Base;
+﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+using Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+
+namespace Epam.ReportPortal.Automation.UiTests.Base;
 
 public class WebSteps
 {
-    // private readonly Browser _browser;
+    public readonly TestConfiguration TestConfiguration;
 
     public WebSteps()
     {
-        // _browser = browser;
+        TestConfiguration = TestConfiguration.GetConfiguration();
     }
 
-    // public BrowserSteps BrowserSteps => new BrowserSteps(_browser);
+    // public BrowserSteps BrowserSteps => new BrowserSteps(config);
 
-    // public LoginPageSteps LoginPageSteps => new LoginPageSteps(_browser);
+    public LoginPageSteps LoginPageSteps => new LoginPageSteps(TestConfiguration);
 
-    // public AllDashboardsPageSteps AllDashboardsSteps => new AllDashboardsPageSteps(_browser);
+    public AllDashboardsPageSteps AllDashboardsSteps => new AllDashboardsPageSteps(TestConfiguration);
 
-    // public ParticularDashboardPageSteps ParticularDashboardSteps => new ParticularDashboardPageSteps(_browser);
+    public ParticularDashboardPageSteps ParticularDashboardSteps => new ParticularDashboardPageSteps(TestConfiguration);
 }

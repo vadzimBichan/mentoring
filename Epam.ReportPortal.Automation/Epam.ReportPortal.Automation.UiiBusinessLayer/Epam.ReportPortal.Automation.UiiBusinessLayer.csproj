@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Selenium.Support" Version="4.22.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.ReportPortal.Automation.CoreSelenium\Epam.ReportPortal.Automation.CoreSelenium.csproj" />
+  </ItemGroup>
+
 </Project>

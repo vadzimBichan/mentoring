@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
 
 namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards
 {
@@ -6,9 +7,9 @@ namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards
     {
         private ParticularDashboardPage _particularDashboardPage;
 
-        public ParticularDashboardPageSteps(Browser browser) : base(browser)
+        public ParticularDashboardPageSteps(TestConfiguration config) : base(config)
         {
-            _particularDashboardPage = new ParticularDashboardPage(browser);
+            _particularDashboardPage = new ParticularDashboardPage(config);
         }
         
         public void OpenParticularDashboardPage(string dashboardName)
