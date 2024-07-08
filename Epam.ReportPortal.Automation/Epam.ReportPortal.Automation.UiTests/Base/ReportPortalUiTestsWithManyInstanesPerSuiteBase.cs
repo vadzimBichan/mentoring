@@ -15,7 +15,7 @@ public abstract class ReportPortalUiTestsWithManyInstancesPerSuiteBase
     [OneTimeSetUp]
     public void BeforeEach()
     {
-        TestConfiguration = TestConfiguration.GetConfiguration();
+        TestConfiguration = ConfigurationManager.GetConfiguration();
         LogConfiguration.Setup();
         Browser = Browser.GetInstance;
     }

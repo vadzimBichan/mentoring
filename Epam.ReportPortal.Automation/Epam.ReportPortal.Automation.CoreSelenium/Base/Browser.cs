@@ -25,7 +25,7 @@ public class Browser
 
     private Browser()
     {
-        var configuration = TestConfiguration.GetConfiguration();
+        var configuration = ConfigurationManager.GetConfiguration();
         switch (configuration.BrowserType)
         {
             case "Chrome":

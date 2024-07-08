@@ -8,7 +8,7 @@ public class LoginPageSteps : BasePageSteps<LoginPage>
     public void OpenLoginPage()
     {
         Log.Info("Opening Login Page");
-        WebPage.Open(TestConfiguration.GetConfiguration().Url + "/login");
+        WebPage.Open(ConfigurationManager.GetConfiguration().Url + "/login");
     }
 
     public void LoginWithCredentials(string login, string password)
