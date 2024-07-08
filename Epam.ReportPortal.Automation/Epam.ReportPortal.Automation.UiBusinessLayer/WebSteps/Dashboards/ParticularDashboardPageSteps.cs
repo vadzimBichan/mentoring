@@ -1,6 +1,6 @@
-﻿using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
 public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPage>
 {

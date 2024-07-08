@@ -5,17 +5,22 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.Core", "Epam.ReportPortal.Automation.Core\Epam.ReportPortal.Automation.Core.csproj", "{D97E82A8-F320-4792-ACDE-F4811F8BD409}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.ReportPortal.Automation.ApiTests", "Epam.ReportPortal.Automation.ApiTests\Epam.ReportPortal.Automation.ApiTests.csproj", "{C9187B13-90B3-4B98-B07F-898B4B5852D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.ApiTests", "Epam.ReportPortal.Automation.ApiTests\Epam.ReportPortal.Automation.ApiTests.csproj", "{C9187B13-90B3-4B98-B07F-898B4B5852D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.ReportPortal.Automation.UiTests", "Epam.ReportPortal.Automation.UiTests\Epam.ReportPortal.Automation.UiTests.csproj", "{2CE6F8C2-29E5-4E3A-B018-A71F0FEACE09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.UiTests", "Epam.ReportPortal.Automation.UiTests\Epam.ReportPortal.Automation.UiTests.csproj", "{2CE6F8C2-29E5-4E3A-B018-A71F0FEACE09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.ReportPortal.Automation.ApiBusinessLayer", "Epam.ReportPortal.Automation.ApiBusinessLayer\Epam.ReportPortal.Automation.ApiBusinessLayer.csproj", "{A77B41EC-F007-44E6-AE0F-3E57469D1765}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.ApiBusinessLayer", "Epam.ReportPortal.Automation.ApiBusinessLayer\Epam.ReportPortal.Automation.ApiBusinessLayer.csproj", "{A77B41EC-F007-44E6-AE0F-3E57469D1765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.ReportPortal.Automation.UiiBusinessLayer", "Epam.ReportPortal.Automation.UiiBusinessLayer\Epam.ReportPortal.Automation.UiiBusinessLayer.csproj", "{D910F553-FF91-448B-AEFD-2C940C3C5DA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.UiBusinessLayer", "Epam.ReportPortal.Automation.UiBusinessLayer\Epam.ReportPortal.Automation.UiBusinessLayer.csproj", "{D910F553-FF91-448B-AEFD-2C940C3C5DA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.ReportPortal.Automation.Configuration", "Epam.ReportPortal.Automation.Configuration\Epam.ReportPortal.Automation.Configuration.csproj", "{E4254FD3-0B44-43B2-9C56-50DF2F103F4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.Configuration", "Epam.ReportPortal.Automation.Configuration\Epam.ReportPortal.Automation.Configuration.csproj", "{E4254FD3-0B44-43B2-9C56-50DF2F103F4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.ReportPortal.Automation.CoreSelenium", "Epam.ReportPortal.Automation.CoreSelenium\Epam.ReportPortal.Automation.CoreSelenium.csproj", "{8D4B8D33-4082-42A8-A05A-4CEF0AA778DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.CoreSelenium", "Epam.ReportPortal.Automation.CoreSelenium\Epam.ReportPortal.Automation.CoreSelenium.csproj", "{8D4B8D33-4082-42A8-A05A-4CEF0AA778DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35EEF3E6-0052-444F-B557-E5AE0DCC0F0E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

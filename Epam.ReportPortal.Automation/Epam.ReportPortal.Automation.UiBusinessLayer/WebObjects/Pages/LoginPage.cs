@@ -1,7 +1,7 @@
 ﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using OpenQA.Selenium;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
+namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class LoginPage : BaseWebPage
 {

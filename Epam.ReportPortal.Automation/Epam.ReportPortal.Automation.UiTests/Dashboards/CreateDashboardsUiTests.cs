@@ -1,5 +1,5 @@
 ﻿using Epam.ReportPortal.Automation.Core.Utils;
-using Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiTests.Base;
 
 namespace Epam.ReportPortal.Automation.UiTests.Dashboards;

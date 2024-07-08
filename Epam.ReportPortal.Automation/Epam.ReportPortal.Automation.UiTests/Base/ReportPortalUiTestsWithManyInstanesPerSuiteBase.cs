@@ -1,7 +1,7 @@
 ﻿using Epam.ReportPortal.Automation.Configuration.Logger;
 using Epam.ReportPortal.Automation.Configuration.Settings;
 using Epam.ReportPortal.Automation.CoreSelenium.Base;
-using Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps.Dashboards;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
 namespace Epam.ReportPortal.Automation.UiTests.Base;
 

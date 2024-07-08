@@ -2,7 +2,7 @@
 using log4net;
 using NUnit.Framework;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebSteps;
+namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps;
 
 public abstract class BasePageSteps<T> where T : BaseWebPage, new()
 {

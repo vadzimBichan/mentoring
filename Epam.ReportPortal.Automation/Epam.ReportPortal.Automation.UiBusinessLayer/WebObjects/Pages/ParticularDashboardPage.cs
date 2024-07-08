@@ -1,8 +1,8 @@
 ﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
-using Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Components;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Components;
 using OpenQA.Selenium;
 
-namespace Epam.ReportPortal.Automation.UiiBusinessLayer.WebObjects.Pages;
+namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class ParticularDashboardPage : BaseWebPage
 {
