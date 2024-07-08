@@ -13,7 +13,10 @@ public class TestConfiguration
 
     static TestConfiguration()
     {
-        config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddUserSecrets<TestConfiguration>()
+            .Build();
     }
 
     public static TestConfiguration GetConfiguration()
