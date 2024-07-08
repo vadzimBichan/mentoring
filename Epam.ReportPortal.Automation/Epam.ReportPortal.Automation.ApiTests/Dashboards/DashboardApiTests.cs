@@ -1,26 +1,37 @@
 ﻿using Epam.ReportPortal.Automation.ApiTests.Base;
+using Xunit.Abstractions;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards
 {
-    [TestClass]
     public class DashboardApiTests : ReportPortalApiTestsBase
     {
-        [TestMethod]
+        public DashboardApiTests(ITestOutputHelper output) : base(output) { }
+
+        [Fact]
         public void ItIsImpossibleToCreateDashboardWithEmptyName()
         {
-            Assert.Fail("Not implemented!");
+            RunTest(() =>
+            {
+                Assert.Fail("Not implemented!");
+            });
         }
 
-        [TestMethod]
+        [Fact]
         public void ItIsImpossibleToCreateDashboardWithNameHavingOneSymbol()
         {
-            Assert.Fail("Not implemented!");
+            RunTest(() =>
+            {
+                Assert.Fail("Not implemented!");
+            });
         }
 
-        [TestMethod]
+        [Fact]
         public void ItIsImpossibleToCreateDashboardWithNameHavingTwoSymbols()
         {
-            Assert.Fail("Not implemented!");
+            RunTest(() =>
+            {
+                Assert.Fail("Not implemented!");
+            });
         }
     }
 }

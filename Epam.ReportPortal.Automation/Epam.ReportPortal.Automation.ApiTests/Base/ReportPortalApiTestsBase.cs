@@ -1,55 +1,57 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using Epam.ReportPortal.Automation.Core.Utils;
+using Xunit.Abstractions;
 
-namespace Epam.ReportPortal.Automation.ApiTests.Base;
-
-[TestClass]
-public abstract class ReportPortalApiTestsBase
+namespace Epam.ReportPortal.Automation.ApiTests.Base
 {
-    private ExtentReports _extent;
-    private ExtentTest _test;
-
-    [ClassInitialize]
-    public void BeforeAll()
+    public class ReportPortalApiTestsBase : IDisposable
     {
-        _extent = new ExtentReports();
-        var fileName = $"Report_{DateTimeUtils.GetDateTimeString()}.html";
-        var htmlReporter = new ExtentSparkReporter(Path.Combine(TestContext.CurrentContext.TestDirectory, fileName));
-        _extent.AttachReporter(htmlReporter);
-    }
+        public ExtentReports extent;
+        public ExtentTest test;
+        private readonly string _testName;
 
-    [TestInitialize]
-    public void BeforeEach()
-    {
-        var testName = TestContext.CurrentContext.Test.Name;
-        _test = _extent.CreateTest(testName);
-    }
+        private bool isPassed { get; set; } 
 
-    [TestCleanup]
-    public void AfterEach()
-    {
-        var status = TestContext.CurrentContext.Result.Outcome.Status;
-        switch (status)
+        public ReportPortalApiTestsBase(ITestOutputHelper output)
         {
-            case TestStatus.Failed:
-                _test.Fail($"Test failed \n{TestContext.CurrentContext.Result.Message}");
-                break;
-            case TestStatus.Skipped:
-                _test.Skip("Test skipped");
-                break;
-            case TestStatus.Passed:
-                _test.Pass("Test passed");
-                break;
-            default:
-                _test.Info("Test outcome: " + status);
-                break;
-        }
-    }
+            var type = output.GetType();
+            var testMember = type.GetField("test", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            var test = (ITest)testMember.GetValue(output);
+            _testName = test.DisplayName;
 
-    [ClassCleanup]
-    public void AfterAll()
-    {
-        _extent.Flush();
+            extent = new ExtentReports();
+
+            var fileName = $"Report_{DateTimeUtils.GetDateTimeString()}.html";
+            var location = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var htmlReporter = new ExtentSparkReporter(Path.Combine(location, fileName));
+            extent.AttachReporter(htmlReporter);
+
+            this.test = extent.CreateTest(_testName);
+        }
+
+        public void RunTest(Action testBody)
+        {
+            try
+            {
+                testBody.Invoke();
+                isPassed = true;
+            }
+            catch
+            {
+                isPassed = false;
+                throw;  
+            }
+        }
+
+        public void Dispose()
+        {
+            if (isPassed)
+                test.Log(Status.Pass, "Test Passed");
+            else
+                test.Log(Status.Fail, "Test Failed");
+
+            extent.Flush();
+        }
     }
 }
