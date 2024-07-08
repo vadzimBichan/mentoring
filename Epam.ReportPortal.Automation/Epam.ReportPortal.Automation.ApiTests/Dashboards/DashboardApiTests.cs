@@ -2,21 +2,22 @@
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards
 {
+    [TestClass]
     public class DashboardApiTests : ReportPortalApiTestsBase
     {
-        [Test]
+        [TestMethod]
         public void ItIsImpossibleToCreateDashboardWithEmptyName()
         {
             Assert.Fail("Not implemented!");
         }
 
-        [Test]
+        [TestMethod]
         public void ItIsImpossibleToCreateDashboardWithNameHavingOneSymbol()
         {
             Assert.Fail("Not implemented!");
         }
 
-        [Test]
+        [TestMethod]
         public void ItIsImpossibleToCreateDashboardWithNameHavingTwoSymbols()
         {
             Assert.Fail("Not implemented!");

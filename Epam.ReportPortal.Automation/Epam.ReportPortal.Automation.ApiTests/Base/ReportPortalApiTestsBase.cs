@@ -1,18 +1,17 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using Epam.ReportPortal.Automation.Core.Utils;
-using NUnit.Framework.Interfaces;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Base;
 
-[TestFixture]
-public class ReportPortalApiTestsBase
+[TestClass]
+public abstract class ReportPortalApiTestsBase
 {
     private ExtentReports _extent;
     private ExtentTest _test;
 
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
+    [ClassInitialize]
+    public void BeforeAll()
     {
         _extent = new ExtentReports();
         var fileName = $"Report_{DateTimeUtils.GetDateTimeString()}.html";
@@ -20,15 +19,15 @@ public class ReportPortalApiTestsBase
         _extent.AttachReporter(htmlReporter);
     }
 
-    [SetUp]
-    public void SetUp()
+    [TestInitialize]
+    public void BeforeEach()
     {
         var testName = TestContext.CurrentContext.Test.Name;
         _test = _extent.CreateTest(testName);
     }
 
-    [TearDown]
-    public void TearDown()
+    [TestCleanup]
+    public void AfterEach()
     {
         var status = TestContext.CurrentContext.Result.Outcome.Status;
         switch (status)
@@ -48,8 +47,8 @@ public class ReportPortalApiTestsBase
         }
     }
 
-    [OneTimeTearDown]
-    public void OneTimeTearDown()
+    [ClassCleanup]
+    public void AfterAll()
     {
         _extent.Flush();
     }
