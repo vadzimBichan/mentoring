@@ -13,7 +13,7 @@ public class ConfigurationManager
             .AddJsonFile("appsettings.json")
             .AddUserSecrets(Assembly.GetExecutingAssembly())
             .Build();
-        _config = _configuration.GetSection("TestConfiguration").Get<TestConfiguration>();
+        _config = _configuration.Get<TestConfiguration>();
     }
 
     public static TestConfiguration GetConfiguration()
