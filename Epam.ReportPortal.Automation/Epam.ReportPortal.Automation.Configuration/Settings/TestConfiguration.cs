@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Epam.ReportPortal.Automation.Configuration.Settings;
 
@@ -9,24 +9,23 @@ public class TestConfiguration
     public string Password { get; private init; }
     public string BrowserType { get; private init; }
 
-    private static readonly JsonDocument settingsJson;
+    private static readonly IConfiguration config;
 
     static TestConfiguration()
     {
-        var json = File.ReadAllText("appsettings.json");
-        settingsJson = JsonDocument.Parse(json);
+        config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
     }
 
     public static TestConfiguration GetConfiguration()
     {
-        var root = settingsJson.RootElement;
+        IConfigurationSection sutSettings = config.GetSection("TestConfiguration");
 
         return new TestConfiguration
         {
-            Url = root.GetProperty("TestConfiguration").GetProperty("Url").GetString(),
-            Login = root.GetProperty("TestConfiguration").GetProperty("Login").GetString(),
-            Password = root.GetProperty("TestConfiguration").GetProperty("Password").GetString(),
-            BrowserType = root.GetProperty("TestConfiguration").GetProperty("Browser").GetString()
+            Url = sutSettings["Url"],
+            Login = sutSettings["Login"],
+            Password = sutSettings["Password"],
+            BrowserType = sutSettings["Browser"]
         };
     }
 }
