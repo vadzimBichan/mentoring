@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epam.ReportPortal.Automation.CoreSelenium", "Epam.ReportPortal.Automation.CoreSelenium\Epam.ReportPortal.Automation.CoreSelenium.csproj", "{8D4B8D33-4082-42A8-A05A-4CEF0AA778DF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35EEF3E6-0052-444F-B557-E5AE0DCC0F0E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C52D74C2-5FA0-4E8A-8D8C-1191D6C108FD}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.16" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.22.0" />
   </ItemGroup>
 
 </Project>
