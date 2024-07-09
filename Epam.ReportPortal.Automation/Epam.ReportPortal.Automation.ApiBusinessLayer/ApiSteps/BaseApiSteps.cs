@@ -12,7 +12,7 @@ namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps
 
         public BaseApiSteps()
         {
-            config = TestConfiguration.GetConfiguration();
+            config = ConfigurationManager.GetConfiguration();
             baseUrl = $"{config.ApiUrl}/{config.TestProject}"; // "http://localhost:8080/api/v1/default_personal"
             client = new RestClient(baseUrl);
             client.AddDefaultHeader("Authorization", config.ApiToken);

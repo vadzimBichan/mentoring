@@ -20,7 +20,7 @@ public class Browser
 
     private static Browser CreateNewBrowserInstance()
     {
-        var configuration = TestConfiguration.GetConfiguration();
+        var configuration = ConfigurationManager.GetConfiguration();
         Browser newBrowser = new Browser();
         switch (configuration.BrowserType)
         {

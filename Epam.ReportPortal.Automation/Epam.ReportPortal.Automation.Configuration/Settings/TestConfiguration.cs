@@ -8,6 +8,6 @@ public class TestConfiguration
     public string TestUserPassword { get; set; }
     public string TestProject { get; set; }
 
-    public string ApiUrl { get; private init; }
-    public string ApiToken { get; private init; }
+    public string ApiUrl { get; set; }
+    public string ApiToken { get; set; }
 }
