@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="ExtentReports" Version="5.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="RestSharp" Version="111.3.0" />
     <PackageReference Include="xunit" Version="2.8.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0">
       <PrivateAssets>all</PrivateAssets>
@@ -17,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Epam.ReportPortal.Automation.ApiBusinessLayer\Epam.ReportPortal.Automation.ApiBusinessLayer.csproj" />
     <ProjectReference Include="..\Epam.ReportPortal.Automation.Core\Epam.ReportPortal.Automation.Core.csproj" />
   </ItemGroup>
 

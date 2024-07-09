@@ -16,7 +16,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public void ItIsPossibleToCreateDashboardWithUniqueName(int dashboardNameLength)
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.Login, TestConfiguration.Password);
+        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
@@ -32,7 +32,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.Login, TestConfiguration.Password);
+        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
@@ -53,7 +53,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols([Values("", "A", "AB")] string dashboardName)
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.Login, TestConfiguration.Password);
+        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
