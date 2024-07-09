@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="NUnit" Version="4.1.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.ReportPortal.Automation.Configuration\Epam.ReportPortal.Automation.Configuration.csproj" />
+    <ProjectReference Include="..\Epam.ReportPortal.Automation.Core\Epam.ReportPortal.Automation.Core.csproj" />
+    <ProjectReference Include="..\Epam.ReportPortal.Automation.UiBusinessLayer\Epam.ReportPortal.Automation.UiBusinessLayer.csproj" />
+  </ItemGroup>
+
+</Project>
