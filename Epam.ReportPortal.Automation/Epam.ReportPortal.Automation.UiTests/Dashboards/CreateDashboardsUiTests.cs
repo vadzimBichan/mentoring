@@ -21,6 +21,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
         var dashboardName = StringUtils.GenerateRandomString(dashboardNameLength);
         AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
+        Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.False);
 
         AllDashboardsSteps.OpenAllDashboardsPage();
         Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
@@ -29,13 +30,38 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     [Test]
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
     {
-        Assert.Fail("Not implemented!");
+        LoginPageSteps.OpenLoginPage();
+        LoginPageSteps.LoginWithCredentials(TestConfiguration.Login, TestConfiguration.Password);
+
+        AllDashboardsSteps.ValidatePageTitle("Report Portal");
+        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
+        var dashboardName = StringUtils.GenerateRandomString(10);
+        AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
+
+        AllDashboardsSteps.OpenAllDashboardsPage();
+        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+
+        AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
+        Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
+
+        AllDashboardsSteps.CloseAddNewDashboardDialog();
+        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
     }
 
     [Test]
     public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols([Values("", "A", "AB")] string dashboardName)
     {
-        Assert.Fail($"Not implemented for '{dashboardName}'!");
+        LoginPageSteps.OpenLoginPage();
+        LoginPageSteps.LoginWithCredentials(TestConfiguration.Login, TestConfiguration.Password);
+
+        AllDashboardsSteps.ValidatePageTitle("Report Portal");
+        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
+        AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
+        Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
+
+        AllDashboardsSteps.CloseAddNewDashboardDialog();
+        Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.False);
+        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount));
     }
 
     public static IEnumerable<int> AllowedLengthData()

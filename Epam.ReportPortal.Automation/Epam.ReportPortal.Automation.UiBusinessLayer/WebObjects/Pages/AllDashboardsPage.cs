@@ -12,9 +12,11 @@ public class AllDashboardsPage : BaseWebPage
 
     public IReadOnlyList<IWebElement> DashboardsList => Driver.FindElements(By.CssSelector("div[class*='gridRow__grid-row'][data-id]"));
 
-    public IWebElement NameTextbox => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
+    public IWebElement NewDashboardDialogHeader => Driver.FindElement(By.CssSelector("span[class*='modalHeader__modal-title']"));
 
-    public IWebElement DescriptionTextbox => Driver.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
+    public IWebElement NameInput => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
+
+    public IWebElement DescriptionInput => Driver.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
 
     public IWebElement AddButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add')]"));
 

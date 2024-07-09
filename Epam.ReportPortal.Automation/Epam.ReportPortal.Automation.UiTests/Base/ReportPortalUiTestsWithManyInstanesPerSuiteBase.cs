@@ -12,7 +12,7 @@ public abstract class ReportPortalUiTestsWithManyInstancesPerSuiteBase
     protected TestConfiguration TestConfiguration;
     protected LoginPageSteps LoginPageSteps => new();
 
-    [OneTimeSetUp]
+    [SetUp]
     public void BeforeEach()
     {
         TestConfiguration = TestConfiguration.GetConfiguration();
@@ -20,7 +20,7 @@ public abstract class ReportPortalUiTestsWithManyInstancesPerSuiteBase
         Browser = Browser.GetInstance;
     }
 
-    [OneTimeTearDown]
+    [TearDown]
     public void AfterEach()
     {
         Browser.Close();
