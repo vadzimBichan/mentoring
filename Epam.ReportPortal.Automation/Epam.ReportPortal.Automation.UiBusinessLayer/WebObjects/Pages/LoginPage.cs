@@ -5,6 +5,9 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class LoginPage : BaseWebPage
 {
+    public LoginPage(string testName) : base(testName)
+    {    }
+
     public IWebElement LoginTextbox => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Login']"));
 
     public IWebElement PasswordTextbox => Driver.FindElement(By.CssSelector("input[type='password'][placeholder='Password']"));

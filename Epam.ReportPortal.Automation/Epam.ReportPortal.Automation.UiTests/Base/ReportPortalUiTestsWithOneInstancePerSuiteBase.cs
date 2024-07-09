@@ -10,19 +10,19 @@ public abstract class ReportPortalUiTestsWithOneInstancePerSuiteBase
 {
     protected Browser Browser;
     protected TestConfiguration TestConfiguration;
-    protected LoginPageSteps LoginPageSteps => new();
+    protected LoginPageSteps LoginPageSteps => new(TestContext.CurrentContext.Test.ClassName);
 
     [OneTimeSetUp]
     public void BeforeAll()
     {
         TestConfiguration = TestConfiguration.GetConfiguration();
         LogConfiguration.Setup();
-        Browser = Browser.GetInstance;
+        Browser = Browser.GetInstance(TestContext.CurrentContext.Test.ClassName);
     }
 
     [OneTimeTearDown]
     public void AfterAll()
     {
-        Browser.Close();
+        Browser.Close(TestContext.CurrentContext.Test.ClassName);
     }
 }

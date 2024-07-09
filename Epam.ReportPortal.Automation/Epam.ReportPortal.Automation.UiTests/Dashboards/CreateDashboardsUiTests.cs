@@ -8,8 +8,8 @@ namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 [Parallelizable(ParallelScope.All)]
 public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
 {
-    public AllDashboardsPageSteps AllDashboardsSteps => new();
-    public ParticularDashboardPageSteps ParticularDashboardSteps => new();
+    public AllDashboardsPageSteps AllDashboardsSteps => new(TestContext.CurrentContext.Test.Name);
+    public ParticularDashboardPageSteps ParticularDashboardSteps => new(TestContext.CurrentContext.Test.Name);
 
     [Test]
     [TestCaseSource(nameof(AllowedLengthData))]

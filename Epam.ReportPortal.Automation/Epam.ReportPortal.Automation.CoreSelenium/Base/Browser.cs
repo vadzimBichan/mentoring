@@ -2,48 +2,47 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using System.Collections.Concurrent;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
 public class Browser
 {
-    private static Browser _instance;
-    public IWebDriver Driver { get; }
-    private static readonly object _lock = new();
+    private static readonly ConcurrentDictionary<string, Browser> Instances
+        = new ConcurrentDictionary<string, Browser>();
 
-    public static Browser GetInstance
+    public IWebDriver Driver { get; private set; }
+
+    public static Browser GetInstance(string testName)
     {
-        get
-        {
-            lock (_lock)
-            {
-                if (_instance == null) _instance = new Browser();
-                return _instance;
-            }
-        }
+        return Instances.GetOrAdd(testName, _ => CreateNewBrowserInstance());
     }
 
-    private Browser()
+    private static Browser CreateNewBrowserInstance()
     {
         var configuration = TestConfiguration.GetConfiguration();
+        Browser newBrowser = new Browser();
         switch (configuration.BrowserType)
         {
             case "Chrome":
-                Driver = new ChromeDriver();
+                newBrowser.Driver = new ChromeDriver();
                 break;
             case "Firefox":
-                Driver = new FirefoxDriver();
+                newBrowser.Driver = new FirefoxDriver();
                 break;
             default:
                 throw new Exception("The browser is not supported");
         }
 
-        Driver.Manage().Window.Maximize();
+        newBrowser.Driver.Manage().Window.Maximize();
+        return newBrowser;
     }
 
-    public void Close()
+    public static void Close(string testName)
     {
-        Driver.Quit();
-        _instance = null;
+        if (Instances.TryRemove(testName, out var browser))
+        {
+            browser.Driver.Quit();
+        }
     }
 }

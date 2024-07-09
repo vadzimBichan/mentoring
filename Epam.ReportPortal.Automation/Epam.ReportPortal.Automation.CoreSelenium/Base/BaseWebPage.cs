@@ -7,9 +7,9 @@ public abstract class BaseWebPage
 {
     public readonly IWebDriver Driver;
 
-    protected BaseWebPage()
+    protected BaseWebPage(string testName)
     {
-        Driver = Browser.GetInstance.Driver;
+        Driver = Browser.GetInstance(testName).Driver;
     }
 
     public string GetUrl()

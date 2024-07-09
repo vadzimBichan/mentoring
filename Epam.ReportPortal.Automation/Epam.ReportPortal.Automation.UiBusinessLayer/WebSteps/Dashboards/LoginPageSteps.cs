@@ -5,6 +5,11 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
 public class LoginPageSteps : BasePageSteps<LoginPage>
 {
+    public LoginPageSteps(string testName)
+    {
+        WebPage = new LoginPage(testName);
+    }
+
     public void OpenLoginPage()
     {
         Log.Info("Opening Login Page");
