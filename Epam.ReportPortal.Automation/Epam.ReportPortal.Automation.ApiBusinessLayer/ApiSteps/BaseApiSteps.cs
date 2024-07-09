@@ -17,10 +17,5 @@ namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps
             client = new RestClient(baseUrl);
             client.AddDefaultHeader("Authorization", config.ApiToken);
         }
-
-        public void ValidateResponseIsOk()
-        {
-            Assert.Fail("TODO: Not implemented");
-        }
     }
 }
