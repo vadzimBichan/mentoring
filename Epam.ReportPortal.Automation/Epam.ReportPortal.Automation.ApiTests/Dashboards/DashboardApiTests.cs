@@ -1,4 +1,5 @@
 ﻿using Epam.ReportPortal.Automation.ApiTests.Base;
+using Epam.ReportPortal.Automation.Core.Utils;
 using Xunit.Abstractions;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards
@@ -7,8 +8,17 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards
     {
         public DashboardApiTests(ITestOutputHelper output) : base(output) { }
 
+        [Theory, MemberData(nameof(AllowedLengthData))]
+        public void ItIsPossibleToCreateDashboardWithUniqueName(string dashboardName)
+        {
+            RunTest(() =>
+            {
+                Assert.Fail($"Not implemented for '{dashboardName}'!");
+            });
+        }
+
         [Fact]
-        public void ItIsImpossibleToCreateDashboardWithEmptyName()
+        public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
         {
             RunTest(() =>
             {
@@ -16,22 +26,22 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards
             });
         }
 
-        [Fact]
-        public void ItIsImpossibleToCreateDashboardWithNameHavingOneSymbol()
+        [Theory]
+        [InlineData("")]
+        [InlineData("A")]
+        [InlineData("AB")]
+        public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols(string dashboardName)
         {
             RunTest(() =>
             {
-                Assert.Fail("Not implemented!");
+                Assert.Fail($"Not implemented for '{dashboardName}'!");
             });
         }
 
-        [Fact]
-        public void ItIsImpossibleToCreateDashboardWithNameHavingTwoSymbols()
+        public static IEnumerable<object[]> AllowedLengthData => new List<object[]>
         {
-            RunTest(() =>
-            {
-                Assert.Fail("Not implemented!");
-            });
-        }
+            new object[] {StringUtils.GenerateRandomString(3) },
+            new object[] {StringUtils.GenerateRandomString(128) }
+        };
     }
 }

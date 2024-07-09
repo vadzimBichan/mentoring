@@ -11,14 +11,15 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public ParticularDashboardPageSteps ParticularDashboardSteps => new();
 
     [Test]
-    public void ItIsPossibleToCreateDashboardWithUniqueName()
+    [TestCaseSource(nameof(AllowedLengthData))]
+    public void ItIsPossibleToCreateDashboardWithUniqueName(int dashboardNameLength)
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithCredentials(TestConfiguration.Login, TestConfiguration.Password);
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
-        var dashboardName = StringUtils.GenerateRandomString(10);
+        var dashboardName = StringUtils.GenerateRandomString(dashboardNameLength);
         AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
 
         AllDashboardsSteps.OpenAllDashboardsPage();
@@ -32,8 +33,14 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     }
 
     [Test]
-    public void ItIsImpossibleToCreateDashboardWithEmptyName()
+    public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols([Values("", "A", "AB")] string dashboardName)
     {
-        Assert.Fail("Not implemented!");
+        Assert.Fail($"Not implemented for '{dashboardName}'!");
+    }
+
+    public static IEnumerable<int> AllowedLengthData()
+    {
+        yield return 3; // min length
+        yield return 128; // max length
     }
 }
