@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Epam.ReportPortal.Automation.Core\Epam.ReportPortal.Automation.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
