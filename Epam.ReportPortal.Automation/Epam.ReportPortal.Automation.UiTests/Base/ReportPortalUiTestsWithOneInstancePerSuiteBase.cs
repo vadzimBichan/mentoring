@@ -15,7 +15,7 @@ public abstract class ReportPortalUiTestsWithOneInstancePerSuiteBase
     [OneTimeSetUp]
     public void BeforeAll()
     {
-        TestConfiguration = TestConfiguration.GetConfiguration();
+        TestConfiguration = ConfigurationManager.GetConfiguration();
         LogConfiguration.Setup();
         Browser = Browser.GetInstance(TestContext.CurrentContext.Test.ClassName);
     }
