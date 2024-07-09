@@ -5,6 +5,7 @@ using Epam.ReportPortal.Automation.UiTests.Base;
 namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
 {
     public AllDashboardsPageSteps AllDashboardsSteps => new();
