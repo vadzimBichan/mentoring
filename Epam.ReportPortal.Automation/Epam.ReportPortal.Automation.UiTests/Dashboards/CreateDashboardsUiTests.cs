@@ -50,7 +50,8 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     }
 
     [Test]
-    public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols([Values("", "A", "AB")] string dashboardName)
+    public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols(
+        [Values("", "A", "AB")] string dashboardName)
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
