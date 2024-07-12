@@ -33,6 +33,9 @@ bld/
 TestResult.xml
 nunit-*.xml
 
+# Specflow
+*.feature.cs
+
 # VS Code files for those working on multiple tools
 .vscode/*
 !.vscode/settings.json
