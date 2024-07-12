@@ -16,7 +16,7 @@ public class Browser
 
     public static Browser GetInstance()
     {
-        return Instances.GetOrAdd(TestContext.CurrentContext.Test.Name, _ => CreateNewBrowserInstance());
+        return Instances.GetOrAdd(TestContext.CurrentContext.Test.FullName, _ => CreateNewBrowserInstance());
     }
 
     private static Browser CreateNewBrowserInstance()
@@ -41,7 +41,7 @@ public class Browser
 
     public static void Close()
     {
-        if (Instances.TryRemove(TestContext.CurrentContext.Test.Name, out var browser))
+        if (Instances.TryRemove(TestContext.CurrentContext.Test.FullName, out var browser))
         {
             browser.Driver.Quit();
         }
