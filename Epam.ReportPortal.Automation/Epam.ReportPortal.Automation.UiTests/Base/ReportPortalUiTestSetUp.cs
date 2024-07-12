@@ -3,8 +3,7 @@ using Epam.ReportPortal.Automation.Configuration.Settings;
 
 namespace Epam.ReportPortal.Automation.UiTests.Base;
 
-[SetUpFixture]
-// https://docs.nunit.org/articles/nunit/writing-tests/attributes/setupfixture.html
+[SetUpFixture] // https://docs.nunit.org/articles/nunit/writing-tests/attributes/setupfixture.html
 public class ReportPortalUiTestSetUp
 {
     [OneTimeSetUp]
