@@ -5,9 +5,6 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Components;
 
 public class LeftPanelComponent : BaseWebComponent
 {
-    public LeftPanelComponent(string testName) : base(testName)
-    {    }
-
     public override IWebElement Root => Driver.FindElement(By.CssSelector("TODO"));
 
     public IWebElement DashboardsItem => Driver.FindElement(By.XPath("//div[contains(@class,'sidebarButton__sidebar-nav-btn') and .//span[text()='Dashboards']]"));

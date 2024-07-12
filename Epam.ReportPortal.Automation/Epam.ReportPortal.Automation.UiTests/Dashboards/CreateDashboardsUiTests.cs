@@ -6,17 +6,17 @@ namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Fixtures)]
-public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
+public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePerTest
 {
-    public AllDashboardsPageSteps AllDashboardsSteps => new(TestContext.CurrentContext.Test.Name);
-    public ParticularDashboardPageSteps ParticularDashboardSteps => new(TestContext.CurrentContext.Test.Name);
+    public AllDashboardsPageSteps AllDashboardsSteps => new();
+    public ParticularDashboardPageSteps ParticularDashboardSteps => new();
 
     [Test]
     [TestCaseSource(nameof(AllowedLengthData))]
     public void ItIsPossibleToCreateDashboardWithUniqueName(int dashboardNameLength)
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
+        LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
@@ -32,7 +32,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
+        LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
@@ -54,7 +54,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
         [Values("", "A", "AB")] string dashboardName)
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
+        LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();

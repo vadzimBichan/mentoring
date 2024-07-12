@@ -6,12 +6,7 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class AllDashboardsPage : BaseWebPage
 {
-    public LeftPanelComponent LeftPanel;
-
-    public AllDashboardsPage(string testName) : base(testName)
-    {
-        LeftPanel = new LeftPanelComponent(testName);
-    }
+    public LeftPanelComponent LeftPanel = new();
 
     public IWebElement AddNewDashboardButton => Driver.FindElement(By.CssSelector("div[class*='addDashboardButton']>button"));
 
