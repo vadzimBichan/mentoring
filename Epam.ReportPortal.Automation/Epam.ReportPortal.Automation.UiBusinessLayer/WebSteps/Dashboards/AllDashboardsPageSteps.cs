@@ -1,4 +1,5 @@
 ﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
+using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
@@ -15,10 +16,35 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
     {
         Log.Info("Creating new dashboard");
         WebPage.AddNewDashboardButton.Click();
-        WebPage.NameTextbox.SendKeys(dashboardName);
-        WebPage.DescriptionTextbox.SendKeys(dashboardDescription);
+        WebPage.NameInput.SendKeys(dashboardName);
+        WebPage.DescriptionInput.SendKeys(dashboardDescription);
         WebPage.AddButton.Click();
         WebPage.WaitTillPageLoad();
+    }
+
+    public void CloseAddNewDashboardDialog()
+    {
+        Log.Info("Closing new dashboard dialog");
+        WebPage.CancelButton.Click();
+        WebPage.WaitTillPageLoad();
+        WebPage.WaitTillAjaxLoad();
+    }
+
+    public bool IsAddNewDashboardDialogOpened()
+    {
+        Log.Info("Checking new dashboard dialog visibility");
+        try
+        {
+            return WebPage.NewDashboardDialogHeader.Displayed;
+        }
+        catch (NoSuchElementException)
+        {
+            return false;
+        }
+        catch (StaleElementReferenceException)
+        {
+            return false;
+        }
     }
 
     public List<string> GetDashboards()

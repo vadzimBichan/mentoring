@@ -9,7 +9,7 @@ public abstract class BaseWebPage
 
     protected BaseWebPage()
     {
-        Driver = Browser.GetInstance.Driver;
+        Driver = Browser.GetInstance().Driver;
     }
 
     public string GetUrl()

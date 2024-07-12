@@ -1,17 +1,19 @@
-﻿using NUnit.Framework;
+﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+using RestSharp;
 
-namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps
+namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
+
+public abstract class BaseApiSteps
 {
-    public abstract class BaseApiSteps
-    {
-        protected BaseApiSteps()
-        {
-            // TODO: for example init rest with user/password
-        }
+    protected TestConfiguration config;
+    protected RestClient client;
+    protected string baseUrl;
 
-        public void ValidateResponseIsOk()
-        {
-            Assert.Fail("TODO: Not implemented");
-        }
+    public BaseApiSteps()
+    {
+        config = ConfigurationManager.GetConfiguration();
+        baseUrl = $"{config.ApiUrl}/{config.TestProject}"; // "http://localhost:8080/api/v1/default_personal"
+        client = new RestClient(baseUrl);
+        client.AddDefaultHeader("Authorization", config.ApiToken);
     }
 }

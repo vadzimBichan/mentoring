@@ -1,56 +1,56 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using Epam.ReportPortal.Automation.Core.Utils;
-using NUnit.Framework.Interfaces;
+using Xunit.Abstractions;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Base;
 
-[TestFixture]
-public class ReportPortalApiTestsBase
+ public class ReportPortalApiTestsBase : IDisposable
 {
-    private ExtentReports _extent;
-    private ExtentTest _test;
+    public ExtentReports extent;
+    public ExtentTest test;
+    private readonly string _testName;
 
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
+    private bool isPassed { get; set; }
+
+    public ReportPortalApiTestsBase(ITestOutputHelper output)
     {
-        _extent = new ExtentReports();
+        var type = output.GetType();
+        var testMember = type.GetField("test", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+        var test = (ITest)testMember.GetValue(output);
+        _testName = test.DisplayName;
+
+        extent = new ExtentReports();
+
         var fileName = $"Report_{DateTimeUtils.GetDateTimeString()}.html";
-        var htmlReporter = new ExtentSparkReporter(Path.Combine(TestContext.CurrentContext.TestDirectory, fileName));
-        _extent.AttachReporter(htmlReporter);
+        var location = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        var htmlReporter = new ExtentSparkReporter(Path.Combine(location, fileName));
+        extent.AttachReporter(htmlReporter);
+
+        this.test = extent.CreateTest(_testName);
     }
 
-    [SetUp]
-    public void SetUp()
+    public void RunTest(Action testBody)
     {
-        var testName = TestContext.CurrentContext.Test.Name;
-        _test = _extent.CreateTest(testName);
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        var status = TestContext.CurrentContext.Result.Outcome.Status;
-        switch (status)
+        try
         {
-            case TestStatus.Failed:
-                _test.Fail($"Test failed \n{TestContext.CurrentContext.Result.Message}");
-                break;
-            case TestStatus.Skipped:
-                _test.Skip("Test skipped");
-                break;
-            case TestStatus.Passed:
-                _test.Pass("Test passed");
-                break;
-            default:
-                _test.Info("Test outcome: " + status);
-                break;
+            testBody.Invoke();
+            isPassed = true;
+        }
+        catch
+        {
+            isPassed = false;
+            throw;
         }
     }
 
-    [OneTimeTearDown]
-    public void OneTimeTearDown()
+    public void Dispose()
     {
-        _extent.Flush();
+        if (isPassed)
+            test.Log(Status.Pass, "Test Passed");
+        else
+            test.Log(Status.Fail, "Test Failed");
+
+        extent.Flush();
     }
 }

@@ -2,8 +2,12 @@
 
 public class TestConfiguration
 {
-    public string Url { get; set; }
-    public string Login { get; set; }
-    public string Password { get; set; }
+    public string WebUrl { get; set; }
     public string BrowserType { get; set; }
+    public string TestUserLogin { get; set; }
+    public string TestUserPassword { get; set; }
+    public string TestProject { get; set; }
+
+    public string ApiUrl { get; set; }
+    public string ApiToken { get; set; }
 }

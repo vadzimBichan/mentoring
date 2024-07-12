@@ -10,6 +10,6 @@ public abstract class BaseWebComponent
 
     protected BaseWebComponent()
     {
-        Driver = Browser.GetInstance.Driver;
+        Driver = Browser.GetInstance().Driver;
     }
 }

@@ -6,7 +6,7 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class ParticularDashboardPage : BaseWebPage
 {
-    public LeftPanelComponent LeftPanel = new();
+    public LeftPanelComponent LeftPanel = new ();
 
     public IWebElement AddNewWidgetButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
 
