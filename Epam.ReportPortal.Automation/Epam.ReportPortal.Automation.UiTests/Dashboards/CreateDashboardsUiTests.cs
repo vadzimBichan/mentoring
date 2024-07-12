@@ -1,5 +1,4 @@
-﻿using Epam.ReportPortal.Automation.Configuration.Settings;
-using Epam.ReportPortal.Automation.Core.Utils;
+﻿using Epam.ReportPortal.Automation.Core.Utils;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiTests.Base;
 
@@ -7,10 +6,10 @@ namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Fixtures)]
-public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstanePerTest
+public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePerTest
 {
-    public AllDashboardsPageSteps AllDashboardsSteps => new(TestContext.CurrentContext.Test.Name);
-    public ParticularDashboardPageSteps ParticularDashboardSteps => new(TestContext.CurrentContext.Test.Name);
+    public AllDashboardsPageSteps AllDashboardsSteps => new();
+    public ParticularDashboardPageSteps ParticularDashboardSteps => new();
 
     [Test]
     [TestCaseSource(nameof(AllowedLengthData))]

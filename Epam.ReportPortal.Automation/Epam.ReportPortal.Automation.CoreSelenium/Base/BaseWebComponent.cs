@@ -8,8 +8,8 @@ public abstract class BaseWebComponent
 
     public abstract IWebElement Root { get; }
 
-    protected BaseWebComponent(string testName)
+    protected BaseWebComponent()
     {
-        Driver = Browser.GetInstance(testName).Driver;
+        Driver = Browser.GetInstance().Driver;
     }
 }

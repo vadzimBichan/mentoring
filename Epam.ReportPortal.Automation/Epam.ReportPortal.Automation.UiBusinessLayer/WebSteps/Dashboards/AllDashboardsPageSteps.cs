@@ -5,11 +5,6 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
 public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
 {
-    public AllDashboardsPageSteps(string testName)
-    {
-        WebPage = new AllDashboardsPage(testName);
-    }
-
     public void OpenAllDashboardsPage()
     {
         Log.Info("Opening all dashboards");

@@ -4,19 +4,19 @@ using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 namespace Epam.ReportPortal.Automation.UiTests.Base;
 
 [TestFixture]
-public abstract class ReportPortalUiTestsBaseWithInstanePerTest
+public abstract class ReportPortalUiTestsBaseWithInstancePerTest
 {
-    protected LoginPageSteps LoginPageSteps => new(TestContext.CurrentContext.Test.Name);
+    protected LoginPageSteps LoginPageSteps => new();
 
     [SetUp]
     public void BeforeEach()
     {
-        Browser.GetInstance(TestContext.CurrentContext.Test.Name);
+        Browser.GetInstance();
     }
 
     [TearDown]
     public void AfterEach()
     {
-        Browser.Close(TestContext.CurrentContext.Test.Name);
+        Browser.Close();
     }
 }

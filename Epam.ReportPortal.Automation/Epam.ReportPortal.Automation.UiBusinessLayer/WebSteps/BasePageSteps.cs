@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps;
 
-public abstract class BasePageSteps<T> where T : BaseWebPage
+public abstract class BasePageSteps<T> where T : BaseWebPage, new()
 {
-    protected T WebPage { get; set; }
+    protected T WebPage { get; } = new();
 
     protected static readonly ILog Log = LogManager.GetLogger(typeof(T));
 

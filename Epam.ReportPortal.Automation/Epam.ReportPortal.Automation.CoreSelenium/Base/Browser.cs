@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System.Collections.Concurrent;
+using NUnit.Framework;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
@@ -13,9 +14,9 @@ public class Browser
 
     public IWebDriver Driver { get; private set; }
 
-    public static Browser GetInstance(string testName)
+    public static Browser GetInstance()
     {
-        return Instances.GetOrAdd(testName, _ => CreateNewBrowserInstance());
+        return Instances.GetOrAdd(TestContext.CurrentContext.Test.Name, _ => CreateNewBrowserInstance());
     }
 
     private static Browser CreateNewBrowserInstance()
@@ -38,9 +39,9 @@ public class Browser
         return newBrowser;
     }
 
-    public static void Close(string testName)
+    public static void Close()
     {
-        if (Instances.TryRemove(testName, out var browser))
+        if (Instances.TryRemove(TestContext.CurrentContext.Test.Name, out var browser))
         {
             browser.Driver.Quit();
         }

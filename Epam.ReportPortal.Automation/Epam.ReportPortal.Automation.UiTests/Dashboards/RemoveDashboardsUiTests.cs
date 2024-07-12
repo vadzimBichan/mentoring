@@ -4,7 +4,7 @@ namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Fixtures)]
-public class RemoveDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstanePerTest
+public class RemoveDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePerTest
 {
     [Test]
     public void ItIsPossibleToRemoveDashboard()
