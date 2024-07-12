@@ -26,6 +26,12 @@ public class LoginPageSteps : BasePageSteps<LoginPage>
         WebPage.WaitTillAjaxLoad();
     }
 
+    public void LoginWithTestUser()
+    {
+        var configuration = ConfigurationManager.GetConfiguration();
+        LoginWithCredentials(configuration.TestUserLogin, configuration.TestUserPassword);
+    }
+
     public void ClickForgotPasswordLink()
     {
         throw new NotImplementedException("TODO: Not implemented!");

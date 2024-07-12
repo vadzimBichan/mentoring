@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.Core.Utils;
+﻿using Epam.ReportPortal.Automation.Configuration.Settings;
+using Epam.ReportPortal.Automation.Core.Utils;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiTests.Base;
 
@@ -6,7 +7,7 @@ namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Fixtures)]
-public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
+public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstanePerTest
 {
     public AllDashboardsPageSteps AllDashboardsSteps => new(TestContext.CurrentContext.Test.Name);
     public ParticularDashboardPageSteps ParticularDashboardSteps => new(TestContext.CurrentContext.Test.Name);
@@ -16,7 +17,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public void ItIsPossibleToCreateDashboardWithUniqueName(int dashboardNameLength)
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
+        LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
@@ -32,7 +33,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
+        LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
@@ -54,7 +55,7 @@ public class CreateDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSu
         [Values("", "A", "AB")] string dashboardName)
     {
         LoginPageSteps.OpenLoginPage();
-        LoginPageSteps.LoginWithCredentials(TestConfiguration.TestUserLogin, TestConfiguration.TestUserPassword);
+        LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();

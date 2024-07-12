@@ -4,7 +4,7 @@ namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Fixtures)]
-public class EditDashboardsUiTests : ReportPortalUiTestsWithManyInstancesPerSuiteBase
+public class EditDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstanePerTest
 {
     [Test]
     public void ItIsPossibleToChangeDashboardName()
