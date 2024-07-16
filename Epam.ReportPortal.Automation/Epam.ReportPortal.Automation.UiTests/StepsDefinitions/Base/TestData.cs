@@ -3,7 +3,7 @@
 public class TestData
 {
     public string FirstDashboardName { get; set; }
-    public string FirstDashboardDescription{ get; set; }
+    public string FirstDashboardDescription { get; set; }
     public string SecondDashboardName { get; set; }
     public string SecondDashboardDescription { get; set; }
     public string UpdatedDashboardName { get; set; }

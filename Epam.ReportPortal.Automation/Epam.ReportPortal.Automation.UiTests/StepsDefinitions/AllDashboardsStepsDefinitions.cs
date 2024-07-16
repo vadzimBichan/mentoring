@@ -33,8 +33,7 @@ public sealed class AllDashboardsStepsDefinitions
         var dashboardDescription = StringUtils.GenerateRandomString(20);
         AllDashboardsSteps.CreateDashboard(dashboardName, dashboardDescription);
         _scenarioContext[nameof(TestData.SecondDashboardName)] = _scenarioContext[nameof(TestData.FirstDashboardName)];
-        _scenarioContext[nameof(TestData.SecondDashboardDescription)] =
-            _scenarioContext[nameof(TestData.FirstDashboardDescription)];
+        _scenarioContext[nameof(TestData.SecondDashboardDescription)] = _scenarioContext[nameof(TestData.FirstDashboardDescription)];
         _scenarioContext[nameof(TestData.FirstDashboardName)] = dashboardName;
         _scenarioContext[nameof(TestData.FirstDashboardDescription)] = dashboardDescription;
     }
