@@ -22,7 +22,7 @@ public sealed class ParticularDashboardStepsDefinitions
         var newDashboardName = StringUtils.GenerateRandomString(10);
         ParticularDashboardPageSteps.EditDashboardNameAndDescription(newDashboardName, null);
         _scenarioContext[nameof(TestData.UpdatedDashboardName)] = newDashboardName;
-        _scenarioContext[nameof(TestData.UpdatedDashboardDescription)] = _scenarioContext[nameof(TestData.UsedDashboardDescription)];
+        _scenarioContext[nameof(TestData.UpdatedDashboardDescription)] = _scenarioContext[nameof(TestData.FirstDashboardDescription)];
     }
 
     [Given(@"User edits dashboard description to new unique value and clicks save changes")]
@@ -30,8 +30,18 @@ public sealed class ParticularDashboardStepsDefinitions
     {
         var newDashboardDescription = StringUtils.GenerateRandomString(20);
         ParticularDashboardPageSteps.EditDashboardNameAndDescription(null, newDashboardDescription);
-        _scenarioContext[nameof(TestData.UpdatedDashboardName)] = _scenarioContext[nameof(TestData.UsedDashboardName)];
+        _scenarioContext[nameof(TestData.UpdatedDashboardName)] = _scenarioContext[nameof(TestData.FirstDashboardName)];
         _scenarioContext[nameof(TestData.UpdatedDashboardDescription)] = newDashboardDescription;
+    }
+
+    [Given(@"User edits dashboard name to already existing value and clicks save changes")]
+    public void GivenUserEditsDashboardNameToAlreadyExistingValueAndClicksSaveChanges()
+    {
+        ParticularDashboardPageSteps.EditDashboardNameAndDescription(
+            _scenarioContext[nameof(TestData.SecondDashboardName)].ToString(),
+            _scenarioContext[nameof(TestData.SecondDashboardDescription)].ToString());
+        _scenarioContext[nameof(TestData.UpdatedDashboardName)] = _scenarioContext[nameof(TestData.FirstDashboardName)];
+        _scenarioContext[nameof(TestData.UpdatedDashboardDescription)] = _scenarioContext[nameof(TestData.FirstDashboardDescription)];
     }
 
     [Given(@"User edits dashboard name to invalid ""([^""]*)"" and clicks save changes")]
@@ -39,7 +49,7 @@ public sealed class ParticularDashboardStepsDefinitions
     {
         ParticularDashboardPageSteps.EditDashboardNameAndDescription(newDashboardName, null);
         _scenarioContext[nameof(TestData.UpdatedDashboardName)] = newDashboardName;
-        _scenarioContext[nameof(TestData.UpdatedDashboardDescription)] = _scenarioContext[nameof(TestData.UsedDashboardDescription)];
+        _scenarioContext[nameof(TestData.UpdatedDashboardDescription)] = _scenarioContext[nameof(TestData.FirstDashboardDescription)];
     }
 
     [When(@"User closes Edit Dashboard dialog on the Dashboard Page")]
@@ -57,7 +67,7 @@ public sealed class ParticularDashboardStepsDefinitions
     [Then(@"Dashboard name is NOT updated on the Dashboard Page")]
     public void ThenDashboardNameIsNotUpdatedOnTheDashboardPage()
     {
-        ParticularDashboardPageSteps.CheckDashboardNameInBreadcrumbs(_scenarioContext[nameof(TestData.UsedDashboardName)].ToString());
+        ParticularDashboardPageSteps.CheckDashboardNameInBreadcrumbs(_scenarioContext[nameof(TestData.FirstDashboardName)].ToString());
     }
 
     [Then(@"Edit dialog is closed on the Dashboard Page")]

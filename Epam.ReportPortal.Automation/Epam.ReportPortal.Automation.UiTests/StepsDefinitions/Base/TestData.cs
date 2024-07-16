@@ -2,8 +2,10 @@
 
 public class TestData
 {
-    public string UsedDashboardName { get; set; }
-    public string UsedDashboardDescription{ get; set; }
+    public string FirstDashboardName { get; set; }
+    public string FirstDashboardDescription{ get; set; }
+    public string SecondDashboardName { get; set; }
+    public string SecondDashboardDescription { get; set; }
     public string UpdatedDashboardName { get; set; }
     public string UpdatedDashboardDescription { get; set; }
     public string InitialDashboardsCount { get; set; }

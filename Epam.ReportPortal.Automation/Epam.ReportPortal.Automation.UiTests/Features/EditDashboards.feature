@@ -21,7 +21,6 @@ Scenario: It is possible to change dashboard description
 	When  User navigates to All Dashboards Page
 	Then  Dashboard description is updated on All Dashboards Page
 
-@Ignore
 @Extended
 Scenario: It is NOT possible to change dashboard name to already existing one
 	Given Second dashboard is created and opened
@@ -30,8 +29,7 @@ Scenario: It is NOT possible to change dashboard name to already existing one
 	And   Dashboard name is NOT updated on the Dashboard Page
 	When  User closes Edit Dashboard dialog on the Dashboard Page
 	And   User navigates to All Dashboards Page
-	Then  Dashboard name is NOT updated on All Dashboards Page
-
+	Then  Two original dashboards are displayed on All Dashboards Page
 
 @Extended
 Scenario Outline: It is NOT possible to change dashboard name to new one having less than three symbols
