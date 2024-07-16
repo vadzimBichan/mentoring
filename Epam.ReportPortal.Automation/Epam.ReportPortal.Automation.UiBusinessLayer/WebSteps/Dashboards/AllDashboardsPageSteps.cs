@@ -12,6 +12,12 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         WebPage.WaitTillPageLoad();
     }
 
+    public void OpenParticularDashboardPage(string dashboardName)
+    {
+        Log.Info("Checking particular dashboard paage");
+        throw new NotImplementedException("TODO: Not implemented!");
+    }
+
     public void CreateDashboard(string dashboardName, string dashboardDescription)
     {
         Log.Info("Creating new dashboard");
@@ -20,6 +26,7 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         WebPage.DescriptionInput.SendKeys(dashboardDescription);
         WebPage.AddButton.Click();
         WebPage.WaitTillPageLoad();
+        WebPage.WaitTillAjaxLoad();
     }
 
     public void CloseAddNewDashboardDialog()
@@ -35,7 +42,7 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Log.Info("Checking new dashboard dialog visibility");
         try
         {
-            return WebPage.NewDashboardDialogHeader.Displayed;
+            return WebPage.AddNewDashboardDialogHeader.Displayed;
         }
         catch (NoSuchElementException)
         {
@@ -47,15 +54,9 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         }
     }
 
-    public List<string> GetDashboards()
+    public List<(string Name, string Description, string Owner)> GetDashboards()
     {
-        var dashboards = new List<string>();
-        foreach (var dashboard in WebPage.DashboardsList)
-        {
-            dashboards.Add(dashboard.Text);
-        }
-
-        return dashboards;
+        return WebPage.GetDashboards();
     }
 
     public int GetDashboardsCount()
