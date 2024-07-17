@@ -9,14 +9,14 @@ namespace Epam.ReportPortal.Automation.UiTests.StepsDefinitions.Base;
 public sealed class Hooks
 {
     [BeforeTestRun]
-    public void BeforeTestsRun()
+    public static void BeforeTestsRun()
     {
         ConfigurationManager.GetConfiguration();
         LogConfiguration.Setup();
     }
 
     [AfterTestRun]
-    public void AfterTestsRun()
+    public static void AfterTestsRun()
     {
         // not used at the moment
     }
