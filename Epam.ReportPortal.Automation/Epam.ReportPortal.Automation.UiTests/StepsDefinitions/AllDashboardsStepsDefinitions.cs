@@ -1,6 +1,5 @@
-﻿using Epam.ReportPortal.Automation.Core.Utils;
-using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
-using Epam.ReportPortal.Automation.UiTests.StepsDefinitions.Base;
+﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
+using TechTalk.SpecFlow.Assist;
 
 namespace Epam.ReportPortal.Automation.UiTests.StepsDefinitions;
 
@@ -16,28 +15,16 @@ public sealed class AllDashboardsStepsDefinitions
         _scenarioContext = scenarioContext;
     }
 
-    [Given(@"New dashboard is created and opened")]
-    public void GivenNewDashboardIsCreatedAndOpened()
+    [Given(@"New dashboard is created with properties and opened")]
+    [Given(@"Additional dashboard is created with properties and opened")]
+    public void GivenNewDashboardIsCreatedWithPropertiesAndOpened(Table dashboardFields)
     {
-        var dashboardName = StringUtils.GenerateRandomString(10);
-        var dashboardDescription = StringUtils.GenerateRandomString(20);
-        AllDashboardsSteps.CreateDashboard(dashboardName, dashboardDescription);
-        _scenarioContext[nameof(TestData.FirstDashboardName)] = dashboardName;
-        _scenarioContext[nameof(TestData.FirstDashboardDescription)] = dashboardDescription;
-    }
+        var fields = dashboardFields.CreateInstance<(string Name, string Description)>();
 
-    [Given(@"Second dashboard is created and opened")]
-    public void GivenSecondDashboardIsCreatedAndOpened()
-    {
-        var dashboardName = StringUtils.GenerateRandomString(10);
-        var dashboardDescription = StringUtils.GenerateRandomString(20);
-        AllDashboardsSteps.CreateDashboard(dashboardName, dashboardDescription);
-        _scenarioContext[nameof(TestData.SecondDashboardName)] = _scenarioContext[nameof(TestData.FirstDashboardName)];
-        _scenarioContext[nameof(TestData.SecondDashboardDescription)] = _scenarioContext[nameof(TestData.FirstDashboardDescription)];
-        _scenarioContext[nameof(TestData.FirstDashboardName)] = dashboardName;
-        _scenarioContext[nameof(TestData.FirstDashboardDescription)] = dashboardDescription;
-    }
+        AllDashboardsSteps.CreateDashboard(fields.Description, fields.Description);
 
+        // todo: put dashboard id in _scenarioContext to clean after scenario
+    }
 
     [When(@"User navigates to All Dashboards Page")]
     public void WhenUserNavigatesToAllDashboardsPage()
@@ -45,65 +32,27 @@ public sealed class AllDashboardsStepsDefinitions
         AllDashboardsSteps.OpenAllDashboardsPage();
     }
 
-    [Then(@"Dashboard name is updated on All Dashboards Page")]
-    [Then(@"Dashboard description is updated on All Dashboards Page")]
-    public void ThenDashboardOrDescriptionNameIsUpdatedOnAllDashboardsPage()
+    [Then(@"Dashboard with name '([^']*)' and description '([^']*)' exists in the table on All Dashboards Page")]
+    public void ThenDashboardWithNameAndDescriptionExistsInTheTableOnAllDashboardsPage(string dashboardName, string dashboardDescription)
     {
         var dashboards = AllDashboardsSteps.GetDashboards();
 
-        var initialDashboardName = _scenarioContext[nameof(TestData.FirstDashboardName)].ToString();
-        var initialDashboardDescription = _scenarioContext[nameof(TestData.FirstDashboardDescription)].ToString();
         Assert.That(
-            dashboards.Count(x => x.Name == initialDashboardName && x.Description == initialDashboardDescription),
-            Is.EqualTo(0),
-            $"Dashboards table is expected NOT having dashboard with name='{initialDashboardName}' and description='{initialDashboardDescription}', but it DOES have");
-
-        var updatedDashboardName = _scenarioContext[nameof(TestData.UpdatedDashboardName)].ToString();
-        var updatedDashboardDescription = _scenarioContext[nameof(TestData.UpdatedDashboardDescription)].ToString();
-        Assert.That(
-            dashboards.Count(x => x.Name == updatedDashboardName && x.Description == updatedDashboardDescription),
+            dashboards.Count(x => x.Name == dashboardName && x.Description == dashboardDescription),
             Is.EqualTo(1),
-            $"Dashboards table is expected to have dashboard with name='{updatedDashboardName}' and description='{updatedDashboardDescription}', but it does NOT have");
+            $"Dashboards table is EXPECTED to have dashboard with name = '{dashboardName}' and description = '{dashboardDescription}'1");
+
     }
 
-    [Then(@"Dashboard name is NOT updated on All Dashboards Page")]
-    [Then(@"Dashboard description is NOT updated on All Dashboards Page")]
-    public void ThenDashboardNameOrDescriptionIsNotUpdatedOnAllDashboardsPage()
+    [Then(@"Dashboard with name '([^']*)' and description '([^']*)' does NOT exist in the table on All Dashboards Page")]
+    public void ThenDashboardWithNameAndDescriptionDoesNOTExistInTheTableOnAllDashboardsPage(string dashboardName, string dashboardDescription)
     {
-        var dashboard = AllDashboardsSteps.GetDashboards();
+        var dashboards = AllDashboardsSteps.GetDashboards();
 
-        var initialDashboardName = _scenarioContext[nameof(TestData.FirstDashboardName)].ToString();
-        var initialDashboardDescription = _scenarioContext[nameof(TestData.FirstDashboardDescription)].ToString();
         Assert.That(
-            dashboard.Count(x => x.Name == initialDashboardName && x.Description == initialDashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected still to have old dashboard with name='{initialDashboardName}' and description='{initialDashboardDescription}', but it does NOT have");
-
-        var updatedDashboardName = _scenarioContext[nameof(TestData.UpdatedDashboardName)].ToString();
-        var updatedDashboardDescription = _scenarioContext[nameof(TestData.UpdatedDashboardDescription)].ToString();
-        Assert.That(
-            dashboard.Count(x => x.Name == updatedDashboardName && x.Description == updatedDashboardDescription),
+            dashboards.Count(x => x.Name == dashboardName && x.Description == dashboardDescription),
             Is.EqualTo(0),
-            $"Dashboards table is expected NOT having dashboard with name='{updatedDashboardName}' and description='{updatedDashboardDescription}', but it DOES have");
-    }
+            $"Dashboards table is NOT expected to have dashboard with name = '{dashboardName}' and description = '{dashboardDescription}'!");
 
-    [Then(@"Two original dashboards are displayed on All Dashboards Page")]
-    public void ThenTwoOriginalDashboardsAreDisplayedOnAllDashboardsPage()
-    {
-        var dashboard = AllDashboardsSteps.GetDashboards();
-
-        var firstDashboardName = _scenarioContext[nameof(TestData.FirstDashboardName)].ToString();
-        var firstDashboardDescription = _scenarioContext[nameof(TestData.FirstDashboardDescription)].ToString();
-        Assert.That(
-            dashboard.Count(x => x.Name == firstDashboardName && x.Description == firstDashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected still to have dashboard 1 with name='{firstDashboardName}' and description='{firstDashboardDescription}', but it does NOT have");
-
-        var secondDashboardName = _scenarioContext[nameof(TestData.SecondDashboardName)].ToString();
-        var secondDashboardDescription = _scenarioContext[nameof(TestData.SecondDashboardDescription)].ToString();
-        Assert.That(
-            dashboard.Count(x => x.Name == secondDashboardName && x.Description == secondDashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected still to have dashboard 2 with name='{secondDashboardName}' and description='{secondDashboardDescription}', but it does NOT have");
     }
 }

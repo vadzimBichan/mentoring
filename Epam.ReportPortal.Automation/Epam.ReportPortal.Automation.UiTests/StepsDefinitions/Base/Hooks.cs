@@ -21,6 +21,21 @@ public sealed class Hooks
         // not used at the moment
     }
 
+    [BeforeFeature]
+    public void BeforeEachFeature()
+    {
+        // TODO: Add project creation via admin to have own project per feature file
+        // And put its id in feature context to use later (for example to clean)
+        // Use API steps for more robust solution
+    }
+
+    [AfterFeature]
+    public void AfterEachFeature()
+    {
+        // TODO: Clean projects via admin
+        // Use API steps for more robust solution
+    }
+
     [BeforeScenario]
     public void BeforeEachScenario()
     {

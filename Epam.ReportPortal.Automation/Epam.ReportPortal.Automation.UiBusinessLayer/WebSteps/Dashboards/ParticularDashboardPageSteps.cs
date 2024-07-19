@@ -42,7 +42,7 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
         Log.Info("Checking dashboard name in breadcrumbs");
         var actualDashboardName = WebPage.DashboardNameLabel.Text;
         Assert.That(actualDashboardName, Is.EqualTo(expectedDashboardName.ToUpper()),
-            $"Dashboard name in breadcrumbs should be '{expectedDashboardName.ToUpper()}', but it is '{actualDashboardName}'");
+            $"Dashboard name in breadcrumbs should be '{expectedDashboardName.ToUpper()}' instead of '{actualDashboardName}'!");
     }
 
     public void EditDashboardNameAndDescription(string? newDashboardName = null, string? newDashboardDescription = null)
