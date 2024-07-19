@@ -44,7 +44,6 @@ public sealed class AllDashboardsStepsDefinitions
             dashboards.Count(x => x.Name == dashboardName && x.Description == dashboardDescription),
             Is.EqualTo(1),
             $"Dashboards table is EXPECTED to have dashboard with name = '{dashboardName}' and description = '{dashboardDescription}'1");
-
     }
 
     [Then(@"Dashboard with name '([^']*)' and description '([^']*)' does NOT exist in the table on All Dashboards Page")]
@@ -56,6 +55,5 @@ public sealed class AllDashboardsStepsDefinitions
             dashboards.Count(x => x.Name == dashboardName && x.Description == dashboardDescription),
             Is.EqualTo(0),
             $"Dashboards table is NOT expected to have dashboard with name = '{dashboardName}' and description = '{dashboardDescription}'!");
-
     }
 }
