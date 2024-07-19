@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
+﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using TechTalk.SpecFlow.Assist;
 
 namespace Epam.ReportPortal.Automation.UiTests.StepsDefinitions;
@@ -17,13 +18,15 @@ public sealed class AllDashboardsStepsDefinitions
 
     [Given(@"New dashboard is created with properties and opened")]
     [Given(@"Additional dashboard is created with properties and opened")]
-    public void GivenNewDashboardIsCreatedWithPropertiesAndOpened(Table dashboardFields)
+    public void GivenNewDashboardIsCreatedWithPropertiesAndOpened(Table table)
     {
-        var fields = dashboardFields.CreateInstance<(string Name, string Description)>();
+        var fields = table.CreateInstance<(string Name, string Description)>();
 
-        AllDashboardsSteps.CreateDashboard(fields.Description, fields.Description);
+        var dashboardId = AllDashboardsSteps.CreateDashboard(fields.Name, fields.Description);
 
-        // todo: put dashboard id in _scenarioContext to clean after scenario
+        var dashboardIds = _scenarioContext.Get<List<int>>("DashboardIDs");
+        dashboardIds.Add(dashboardId);
+        _scenarioContext["DashboardIDs"] = dashboardIds;
     }
 
     [When(@"User navigates to All Dashboards Page")]

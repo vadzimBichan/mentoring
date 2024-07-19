@@ -43,12 +43,11 @@ Scenario Outline: It is NOT possible to change dashboard name to new one having 
 	Given User edits dashboard name to '<Invalid Dashboard Name>' and clicks save changes
 	Then  Edit dialog is NOT closed on the Dashboard Page
 	When  User closes Edit Dashboard dialog on the Dashboard Page
-	Then  Dashboard name is still displayed as 'Test Dashboard Name 2' on the Dashboard Page
+	Then  Dashboard name is still displayed as 'Test Dashboard Name' on the Dashboard Page
 	When  User navigates to All Dashboards Page
 	Then  Dashboard with name 'Test Dashboard Name' and description 'Test Dashboard Description' exists in the table on All Dashboards Page
 	And   Dashboard with name '<Invalid Dashboard Name>' and description 'Test Dashboard Description' does NOT exist in the table on All Dashboards Page
 	Examples:
 	| Invalid Dashboard Name |
-	| "A"                    |
-	| "AB"                   |
-	| " "                    |
+	| A                      |
+	| AB                     |

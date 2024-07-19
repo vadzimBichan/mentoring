@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
@@ -18,7 +19,7 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         throw new NotImplementedException("TODO: Not implemented!");
     }
 
-    public void CreateDashboard(string dashboardName, string dashboardDescription)
+    public int CreateDashboard(string dashboardName, string dashboardDescription)
     {
         Log.Info("Creating new dashboard");
         WebPage.AddNewDashboardButton.Click();
@@ -27,6 +28,8 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         WebPage.AddButton.Click();
         WebPage.WaitTillPageLoad();
         WebPage.WaitTillAjaxLoad();
+
+        return int.Parse(WebPage.GetUrl().Split('/').Last()); // return dashboard id from url
     }
 
     public void CloseAddNewDashboardDialog()

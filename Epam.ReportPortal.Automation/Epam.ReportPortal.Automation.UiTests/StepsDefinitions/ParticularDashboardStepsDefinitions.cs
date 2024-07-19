@@ -17,7 +17,7 @@ public sealed class ParticularDashboardStepsDefinitions
     [Given(@"User edits dashboard name to '([^']*)' and clicks save changes")]
     public void GivenUserEditsDashboardNameToAndClicksSaveChanges(string dashboardName)
     {
-        ParticularDashboardPageSteps.EditDashboardNameAndDescription(dashboardName);
+        ParticularDashboardPageSteps.EditDashboardNameAndDescription(dashboardName, null);
     }
 
     [Given(@"User edits dashboard description to '([^']*)' and clicks save changes")]
