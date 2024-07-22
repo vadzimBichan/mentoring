@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotnetUnitTesting
+namespace Epam.Mentoring.Shopping
 {
     public class ProductNotFoundException : Exception
     {

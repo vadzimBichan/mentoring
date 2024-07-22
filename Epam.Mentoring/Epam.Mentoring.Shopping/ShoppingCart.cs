@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DotnetUnitTesting
+namespace Epam.Mentoring.Shopping
 {
     public class ShoppingCart
     {

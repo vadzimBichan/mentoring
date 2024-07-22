@@ -1,4 +1,4 @@
-﻿namespace DotnetUnitTesting
+﻿namespace Epam.Mentoring.Shopping
 {
     public class UserAccount
     {
