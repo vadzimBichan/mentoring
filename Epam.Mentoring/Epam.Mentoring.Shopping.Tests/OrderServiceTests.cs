@@ -17,12 +17,14 @@ public class OrderServiceTests
     public void GetOrderPrice_ReturnsCorrectTotalPriceForUserWithDiscount()
     {
         // Arrange
-        var user = new UserAccount("John", "Smith ", "1990/10/10");
+        var user = new UserAccount("John", "Smith", "1990/10/10");
         var product = new Product(1, "Test Product", 10, 5);
         user.ShoppingCart.AddProductToCart(product);
         var expectedOrderPrice = user.ShoppingCart.GetCartTotalPrice() - 3;
 
-        _discountUtilityMock.Setup(x => x.CalculateDiscount(It.Is<UserAccount>(u => u.Name == "John"))).Returns(3);
+        _discountUtilityMock.Setup(x =>
+            x.CalculateDiscount(It.Is<UserAccount>(u =>
+                u.Name == "John" && u.Surname == "Smith" && u.DateOfBirth == "1990/10/10"))).Returns(3);
 
         var sut = new OrderService(_discountUtilityMock.Object);
 
@@ -31,7 +33,9 @@ public class OrderServiceTests
 
         // Assert
         Assert.That(actualOrderPrice, Is.EqualTo(expectedOrderPrice));
-        _discountUtilityMock.Verify(x => x.CalculateDiscount(It.Is<UserAccount>(u => u.Name == "John")), Times.Once);
+        _discountUtilityMock.Verify(
+            x => x.CalculateDiscount(It.Is<UserAccount>(u =>
+                u.Name == "John" && u.Surname == "Smith" && u.DateOfBirth == "1990/10/10")), Times.Once);
         _discountUtilityMock.VerifyNoOtherCalls();
     }
 }
