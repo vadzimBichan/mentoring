@@ -12,7 +12,7 @@ public class ConfigurationManager
     {
         _configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
-            .AddUserSecrets(Assembly.GetExecutingAssembly())
+            .AddUserSecrets(Assembly.GetExecutingAssembly()) // C:\Users\<username>\AppData\Roaming\Microsoft\UserSecrets\<UserSecretsId>\secrets.json.
             .Build();
         _config = _configuration.Get<TestConfiguration>();
     }
