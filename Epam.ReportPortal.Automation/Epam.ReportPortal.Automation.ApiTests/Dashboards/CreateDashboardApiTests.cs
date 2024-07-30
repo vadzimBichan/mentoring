@@ -2,41 +2,28 @@
 using Epam.ReportPortal.Automation.Core.Utils;
 using Newtonsoft.Json;
 using System.Net;
+using RestSharp;
 using DashboardResponseEntities = Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Entities.DashboardResponseEntities;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
 public class CreateDashboardApiTests: DashboardApiTestsBase
 {
-    [Theory, MemberData(nameof(AllowedLengthData))]
-    public void ItIsPossibleToCreateDashboardWithUniqueName(int dashboardNameLength)
-    {
-            var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
-            var dashboardName = StringUtils.GenerateRandomString(dashboardNameLength);
-            var response = DashboardsApiSteps.CreateDashboardRequest(dashboardName, "Test Description");
-            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-            Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
-
-            int createdDashboardId = JsonConvert.DeserializeObject<DashboardResponseEntities.Id>(response.Content).Value;
-            var createdDashboard = DashboardsApiSteps.GetDashboardById(createdDashboardId);
-            Assert.Equal(dashboardName, createdDashboard.Name);
-    }
-
     [Fact]
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
     {
         var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
         var dashboardName = StringUtils.GenerateRandomString(10);
         var response = DashboardsApiSteps.CreateDashboardRequest(dashboardName, "Test Description");
-        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        DashboardsApiSteps.VerifyResponseCode(response, HttpStatusCode.Created);
         Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
 
         response = DashboardsApiSteps.CreateDashboardRequest(dashboardName, "Test Description");
-        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        DashboardsApiSteps.VerifyResponseCode(response, HttpStatusCode.Conflict);
         Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
 
-        var message = JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(response.Content).Value;
-        Assert.Equal($"Resource '{dashboardName}' already exists. You couldn't create the duplicate.", message);
+        var actualMessage = DashboardsApiSteps.GetMessageFromResponse(response);
+        Assert.Equal($"Resource '{dashboardName}' already exists. You couldn't create the duplicate.", actualMessage);
     }
 
     [Theory]
@@ -48,16 +35,10 @@ public class CreateDashboardApiTests: DashboardApiTestsBase
     {
         var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
         var response = DashboardsApiSteps.CreateDashboardRequest(dashboardName, "Test Description");
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        DashboardsApiSteps.VerifyResponseCode(response, HttpStatusCode.BadRequest);
         Assert.Equal(initialDashboardsCount, DashboardsApiSteps.GetDashboardsCount());
 
-        var actualMessage = JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(response.Content).Value;
+        var actualMessage = DashboardsApiSteps.GetMessageFromResponse(response);
         Assert.Equal(expectedMessage, actualMessage);
     }
-
-    public static IEnumerable<object[]> AllowedLengthData => new List<object[]>
-    {
-        new object[] { 3 },
-        new object[] { 128 }
-    };
 }

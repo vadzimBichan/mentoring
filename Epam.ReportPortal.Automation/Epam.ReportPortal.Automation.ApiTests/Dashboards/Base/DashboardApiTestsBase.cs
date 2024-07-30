@@ -4,5 +4,5 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
 
 public abstract class DashboardApiTestsBase
 {
-    public DashboardsApiSteps DashboardsApiSteps => new();
+    protected DashboardsApiSteps DashboardsApiSteps => new();
 }

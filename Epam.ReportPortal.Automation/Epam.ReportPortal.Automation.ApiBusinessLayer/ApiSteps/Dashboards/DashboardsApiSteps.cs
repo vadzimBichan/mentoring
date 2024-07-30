@@ -6,23 +6,26 @@ namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Dashboards;
 
 public class DashboardsApiSteps : BaseApiSteps
 {
+    #region Response Steps
+
     public RestResponse GetAllDashboardsRequest()
     {
-        var request = new RestRequest("dashboard", Method.Get);
+        var request = new RestRequest("dashboard");
         return client.Execute(request);
     }
 
     public RestResponse GetDashboardRequest(int dashboardId)
     {
-        var request = new RestRequest($"dashboard/{dashboardId}", Method.Get);
+        var request = new RestRequest($"dashboard/{dashboardId}");
         return client.Execute(request);
     }
 
     public RestResponse CreateDashboardRequest(string name, string description)
     {
         var request = new RestRequest("dashboard", Method.Post);
-        request.AddJsonBody(new {
-            name, 
+        request.AddJsonBody(new
+        {
+            name,
             description
         });
         return client.Execute(request);
@@ -45,6 +48,10 @@ public class DashboardsApiSteps : BaseApiSteps
         return client.Execute(request);
     }
 
+    #endregion
+
+    #region Object Steps
+
     public List<DashboardResponseEntities.Dashboard> GetDashboardsList()
     {
         var response = GetAllDashboardsRequest();
@@ -65,4 +72,11 @@ public class DashboardsApiSteps : BaseApiSteps
 
         return dashboard;
     }
+
+    public string GetMessageFromResponse(RestResponse response)
+    {
+        return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(response.Content).Value;
+    }
+
+    #endregion
 }
