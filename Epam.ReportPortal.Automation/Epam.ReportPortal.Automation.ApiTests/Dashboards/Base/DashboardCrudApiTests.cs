@@ -4,13 +4,14 @@ using Newtonsoft.Json;
 using System.Net;
 using DashboardResponseEntities = Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Entities.DashboardResponseEntities;
 
-namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
+namespace Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
 
 public class DashboardCrudApiTests
 {
     public DashboardsApiSteps DashboardsApiSteps => new();
 
     [Fact]
+    [Trait("Category", "Smoke")]
     public void ItIsPossibleToGetAllDashboards()
     {
         var response = DashboardsApiSteps.GetAllDashboardsRequest();
@@ -22,6 +23,7 @@ public class DashboardCrudApiTests
     }
 
     [Fact]
+    [Trait("Category", "Smoke")]
     public void ItIsPossibleToGetDashboardById()
     {
         var dashboards = DashboardsApiSteps.GetDashboardsList();
@@ -36,6 +38,7 @@ public class DashboardCrudApiTests
     }
 
     [Fact]
+    [Trait("Category", "Smoke")]
     public void ItIsPossibleToCreateDashboard()
     {
         var dashboardName = StringUtils.GenerateRandomString(10);
@@ -49,6 +52,7 @@ public class DashboardCrudApiTests
     }
 
     [Fact]
+    [Trait("Category", "Smoke")]
     public void ItIsPossibleToDeleteDashboardById()
     {
         var dashboards = DashboardsApiSteps.GetDashboardsList();
@@ -62,6 +66,7 @@ public class DashboardCrudApiTests
     }
 
     [Fact]
+    [Trait("Category", "Smoke")]
     public void ItIsPossibleToUpdateDashboard()
     {
         var dashboards = DashboardsApiSteps.GetDashboardsList();
