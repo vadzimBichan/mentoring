@@ -35,36 +35,49 @@ public class DashboardResponseEntities
         [JsonProperty("content")]
         public List<Dashboard> Dashboards { get; set; }
         [JsonProperty("page")]
-        public Page page { get; set; }
+        public Page Page { get; set; }
     }
 
     public class Widget
     {
-        public string widgetName { get; set; }
-        public int widgetId { get; set; }
-        public string widgetType { get; set; }
-        public WidgetSize widgetSize { get; set; }
-        public WidgetPosition widgetPosition { get; set; }
-        public WidgetOptions widgetOptions { get; set; }
+        [JsonProperty("widgetName")]
+        public string Name { get; set; }
+        [JsonProperty("widgetType")]
+        public string Type { get; set; }
+        [JsonProperty("widgetId")]
+        public int Id { get; set; }
+        [JsonProperty("widgetSize")]
+        public WidgetSize Size { get; set; }
+        [JsonProperty("widgetPosition")]
+        public WidgetPosition Position { get; set; }
+        [JsonProperty("widgetOptions")]
+        public WidgetOptions Options { get; set; }
     }
 
     public class WidgetOptions
     {
-        public bool zoom { get; set; }
-        public string timeline { get; set; }
-        public string viewMode { get; set; }
+        [JsonProperty("zoom")]
+        public bool Zoom { get; set; }
+        [JsonProperty("timeline")]
+        public string Timeline { get; set; }
+        [JsonProperty("viewMode")]
+        public string ViewMode { get; set; }
     }
 
     public class WidgetPosition
     {
-        public int positionX { get; set; }
-        public int positionY { get; set; }
+        [JsonProperty("positionX")]
+        public int PositionX { get; set; }
+        [JsonProperty("positionY")]
+        public int PositionY { get; set; }
     }
 
     public class WidgetSize
     {
-        public int width { get; set; }
-        public int height { get; set; }
+        [JsonProperty("width")]
+        public int Width { get; set; }
+        [JsonProperty("height")]
+        public int Height { get; set; }
     }
 
     public class Message

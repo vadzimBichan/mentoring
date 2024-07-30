@@ -22,8 +22,8 @@ public class DashboardsApiSteps : BaseApiSteps
     {
         var request = new RestRequest("dashboard", Method.Post);
         request.AddJsonBody(new {
-            name = name,
-            description = description
+            name, 
+            description
         });
         return client.Execute(request);
     }
@@ -39,8 +39,8 @@ public class DashboardsApiSteps : BaseApiSteps
         var request = new RestRequest($"dashboard/{dashboardId}", Method.Put);
         request.AddJsonBody(new
         {
-            name = name,
-            description = description
+            name,
+            description
         });
         return client.Execute(request);
     }
