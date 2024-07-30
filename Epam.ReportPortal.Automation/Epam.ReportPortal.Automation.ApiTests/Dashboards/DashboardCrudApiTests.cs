@@ -39,13 +39,13 @@ public class DashboardCrudApiTests
     public void ItIsPossibleToCreateDashboard()
     {
         var dashboardName = StringUtils.GenerateRandomString(10);
-        var initialdashboardsCount = DashboardsApiSteps.GetDashboardsCount();
+        var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
         var response = DashboardsApiSteps.CreateDashboardRequest(dashboardName, "Test Description");
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
         var createdDashboardId = JsonConvert.DeserializeObject<DashboardResponseEntities.Id>(response.Content).Value;
         Assert.NotNull(createdDashboardId);
-        Assert.Equal(initialdashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
+        Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
     }
 
     [Fact]

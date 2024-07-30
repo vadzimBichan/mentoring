@@ -9,7 +9,7 @@ public abstract class BaseApiSteps
     protected RestClient client;
     protected string baseUrl;
 
-    public BaseApiSteps()
+    protected BaseApiSteps()
     {
         config = ConfigurationManager.GetConfiguration();
         baseUrl = $"{config.ApiUrl}/{config.TestProject}"; // "http://localhost:8080/api/v1/default_personal"
