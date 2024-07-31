@@ -10,12 +10,12 @@ public class DashboardsApiSteps : BaseApiSteps
 
     public HttpResponseMessage GetAllDashboardsRequest()
     {
-        return client.GetAsync("dashboard").Result;
+        return client.GetAsync("api/v1/default_personal/dashboard").Result;
     }
 
     public HttpResponseMessage GetDashboardRequest(int dashboardId)
     {
-        return client.GetAsync($"dashboard/{dashboardId}").Result;
+        return client.GetAsync($"api/v1/default_personal/dashboard/{dashboardId}").Result;
     }
 
     public HttpResponseMessage CreateDashboardRequest(string name, string description)
@@ -26,12 +26,12 @@ public class DashboardsApiSteps : BaseApiSteps
             description
         };
 
-        return client.PostAsync("dashboard", obj).Result;
+        return client.PostAsync("api/v1/default_personal/dashboard", obj).Result;
     }
 
     public HttpResponseMessage DeleteDashboardRequest(int dashboardId)
     {
-        return client.DeleteAsync($"dashboard/{dashboardId}").Result;
+        return client.DeleteAsync($"api/v1/default_personal/dashboard/{dashboardId}").Result;
     }
 
     public HttpResponseMessage UpdateDashboardRequest(int dashboardId, string name, string description)
@@ -42,7 +42,7 @@ public class DashboardsApiSteps : BaseApiSteps
             description
         };
 
-        return client.PutAsync($"dashboard/{dashboardId}", obj).Result;
+        return client.PutAsync($"api/v1/default_personal/dashboard/{dashboardId}", obj).Result;
     }
 
     #endregion

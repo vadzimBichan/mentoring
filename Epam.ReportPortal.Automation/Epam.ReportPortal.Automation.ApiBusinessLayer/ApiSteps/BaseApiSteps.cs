@@ -15,15 +15,14 @@ public abstract class BaseApiSteps
     protected BaseApiSteps()
     {
         config = ConfigurationManager.GetConfiguration();
-        baseUrl = $"{config.ApiUrl}/{config.TestProject}"; // "http://localhost:8080/api/v1/default_personal"
 
         switch (config.ClientType)
         {
             case "RestSharp":
-                client = new RestSharpApiClient(baseUrl, config.ApiToken);
+                client = new RestSharpApiClient(config.ApiUrl, config.ApiToken);
                 break;
             case "HttpClient":
-                client = new HttpClientApiClient(baseUrl, config.ApiToken);
+                client = new HttpClientApiClient(config.ApiUrl, config.ApiToken);
                 break;
             default:
                 throw new Exception("The client is not supported");
