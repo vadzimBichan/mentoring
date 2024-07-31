@@ -52,7 +52,7 @@ public class DashboardsApiSteps : BaseApiSteps
     public int CreateDashboard(string name, string description)
     {
         var response = CreateDashboardRequest(name, description);
-        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var contentString = response.Content.ReadAsStringAsync().Result;
         var createdDashboardId = JsonConvert.DeserializeObject<DashboardResponseEntities.Id>(contentString).Value;
 
         return createdDashboardId;
@@ -98,7 +98,7 @@ public class DashboardsApiSteps : BaseApiSteps
     public DashboardResponseEntities.Dashboard GetDashboardById(int dashboardId)
     {
         var response = GetDashboardRequest(dashboardId);
-        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var contentString = response.Content.ReadAsStringAsync().Result;
         var dashboard = JsonConvert.DeserializeObject<DashboardResponseEntities.Dashboard>(contentString);
 
         return dashboard;
@@ -115,7 +115,7 @@ public class DashboardsApiSteps : BaseApiSteps
     public List<DashboardResponseEntities.Dashboard> GetDashboardsList()
     {
         var response = GetAllDashboardsRequest();
-        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var contentString = response.Content.ReadAsStringAsync().Result;
         var dashboards = JsonConvert.DeserializeObject<DashboardResponseEntities.ResponseBody>(contentString).Dashboards;
 
         return dashboards;
@@ -128,13 +128,13 @@ public class DashboardsApiSteps : BaseApiSteps
 
     public string GetMessageFromResponse(HttpResponseMessage response)
     {
-        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var contentString = response.Content.ReadAsStringAsync().Result;
         return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(contentString).Value;
     }
 
     public DashboardResponseEntities.Message GetErrorFromResponse(HttpResponseMessage response)
     {
-        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var contentString = response.Content.ReadAsStringAsync().Result;
         return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(contentString);
     }
 
