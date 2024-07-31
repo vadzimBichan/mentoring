@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Entities;
 using Newtonsoft.Json;
-using RestSharp;
 
 namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Dashboards;
 
@@ -9,49 +8,41 @@ public class DashboardsApiSteps : BaseApiSteps
 {
     #region Response Steps
 
-    public RestResponse GetAllDashboardsRequest()
+    public HttpResponseMessage GetAllDashboardsRequest()
     {
-        var request = new RestRequest("dashboard");
-
-        return client.Execute(request);
+        return client.GetAsync("dashboard").Result;
     }
 
-    public RestResponse GetDashboardRequest(int dashboardId)
+    public HttpResponseMessage GetDashboardRequest(int dashboardId)
     {
-        var request = new RestRequest($"dashboard/{dashboardId}");
-
-        return client.Execute(request);
+        return client.GetAsync($"dashboard/{dashboardId}").Result;
     }
 
-    public RestResponse CreateDashboardRequest(string name, string description)
+    public HttpResponseMessage CreateDashboardRequest(string name, string description)
     {
-        var request = new RestRequest("dashboard", Method.Post);
-        request.AddJsonBody(new
+        var obj = new
         {
             name,
             description
-        });
+        };
 
-        return client.Execute(request);
+        return client.PostAsync("dashboard", obj).Result;
     }
 
-    public RestResponse DeleteDashboardRequest(int dashboardId)
+    public HttpResponseMessage DeleteDashboardRequest(int dashboardId)
     {
-        var request = new RestRequest($"dashboard/{dashboardId}", Method.Delete);
-
-        return client.Execute(request);
+        return client.DeleteAsync($"dashboard/{dashboardId}").Result;
     }
 
-    public RestResponse UpdateDashboardRequest(int dashboardId, string name, string description)
+    public HttpResponseMessage UpdateDashboardRequest(int dashboardId, string name, string description)
     {
-        var request = new RestRequest($"dashboard/{dashboardId}", Method.Put);
-        request.AddJsonBody(new
+        var obj = new
         {
             name,
             description
-        });
+        };
 
-        return client.Execute(request);
+        return client.PutAsync($"dashboard/{dashboardId}", obj).Result;
     }
 
     #endregion
@@ -61,7 +52,8 @@ public class DashboardsApiSteps : BaseApiSteps
     public int CreateDashboard(string name, string description)
     {
         var response = CreateDashboardRequest(name, description);
-        var createdDashboardId = JsonConvert.DeserializeObject<DashboardResponseEntities.Id>(response.Content).Value;
+        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var createdDashboardId = JsonConvert.DeserializeObject<DashboardResponseEntities.Id>(contentString).Value;
 
         return createdDashboardId;
     }
@@ -106,7 +98,8 @@ public class DashboardsApiSteps : BaseApiSteps
     public DashboardResponseEntities.Dashboard GetDashboardById(int dashboardId)
     {
         var response = GetDashboardRequest(dashboardId);
-        var dashboard = JsonConvert.DeserializeObject<DashboardResponseEntities.Dashboard>(response.Content);
+        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var dashboard = JsonConvert.DeserializeObject<DashboardResponseEntities.Dashboard>(contentString);
 
         return dashboard;
     }
@@ -122,7 +115,8 @@ public class DashboardsApiSteps : BaseApiSteps
     public List<DashboardResponseEntities.Dashboard> GetDashboardsList()
     {
         var response = GetAllDashboardsRequest();
-        var dashboards = JsonConvert.DeserializeObject<DashboardResponseEntities.ResponseBody>(response.Content).Dashboards;
+        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var dashboards = JsonConvert.DeserializeObject<DashboardResponseEntities.ResponseBody>(contentString).Dashboards;
 
         return dashboards;
     }
@@ -132,14 +126,16 @@ public class DashboardsApiSteps : BaseApiSteps
         return GetDashboardsList().Count;
     }
 
-    public string GetMessageFromResponse(RestResponse response)
+    public string GetMessageFromResponse(HttpResponseMessage response)
     {
-        return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(response.Content).Value;
+        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(contentString).Value;
     }
 
-    public DashboardResponseEntities.Message GetErrorFromResponse(RestResponse response)
+    public DashboardResponseEntities.Message GetErrorFromResponse(HttpResponseMessage response)
     {
-        return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(response.Content);
+        var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        return JsonConvert.DeserializeObject<DashboardResponseEntities.Message>(contentString);
     }
 
     #endregion
