@@ -1,5 +1,4 @@
-﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
-using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;

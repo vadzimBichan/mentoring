@@ -84,6 +84,8 @@ public class DashboardResponseEntities
     {
         [JsonProperty("message")]
         public string Value { get; set; }
+        [JsonProperty("errorCode")]
+        public int ErrorCode { get; set; }
     }
 
     public class Id
