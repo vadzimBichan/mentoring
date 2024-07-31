@@ -57,7 +57,7 @@ public class DashboardCrudApiTests
 
         var contentString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
         var createdDashboardId = JsonConvert.DeserializeObject<DashboardResponseEntities.Id>(contentString).Value;
-        Assert.NotNull(createdDashboardId);
+        Assert.True(createdDashboardId > 0);
         Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
     }
 
