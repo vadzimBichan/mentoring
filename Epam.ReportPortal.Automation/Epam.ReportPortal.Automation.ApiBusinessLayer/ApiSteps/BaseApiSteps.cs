@@ -1,6 +1,6 @@
-﻿using Epam.ReportPortal.Automation.ApiBusinessLayer.Client;
+﻿using System.Net;
+using Epam.ReportPortal.Automation.ApiBusinessLayer.Client;
 using Epam.ReportPortal.Automation.Configuration.Settings;
-using System.Net;
 using Xunit;
 using ConfigurationManager = Epam.ReportPortal.Automation.Configuration.Settings.ConfigurationManager;
 

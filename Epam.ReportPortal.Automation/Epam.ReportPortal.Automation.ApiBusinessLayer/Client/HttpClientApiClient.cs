@@ -1,10 +1,9 @@
-﻿using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Text;
 using Newtonsoft.Json;
 
 namespace Epam.ReportPortal.Automation.ApiBusinessLayer.Client;
 
-public class HttpClientApiClient: IApiClient
+public class HttpClientApiClient : IApiClient
 {
     private readonly HttpClient client;
 

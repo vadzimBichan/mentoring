@@ -1,10 +1,10 @@
-﻿using Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
+﻿using System.Net;
+using Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
 using Epam.ReportPortal.Automation.Core.Utils;
-using System.Net;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
-public class CreateDashboardApiTests: DashboardApiTestsBase
+public class CreateDashboardApiTests : DashboardApiTestsBase
 {
     [Fact]
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
@@ -19,7 +19,6 @@ public class CreateDashboardApiTests: DashboardApiTestsBase
         Assert.Equal($"Resource '{dashboardName}' already exists. You couldn't create the duplicate.", message.Value);
         Assert.Equal(expectedErrorCode, message.ErrorCode);
         Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
-
     }
 
     [Theory]

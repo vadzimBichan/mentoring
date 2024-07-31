@@ -1,7 +1,6 @@
-﻿using Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
+﻿using System.Net;
+using Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
 using Epam.ReportPortal.Automation.Core.Utils;
-using System.Net;
-using static Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Entities.DashboardResponseEntities;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
