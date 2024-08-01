@@ -1,36 +1,26 @@
-﻿using System.Net;
-using Epam.ReportPortal.Automation.ApiBusinessLayer.Client;
-using Epam.ReportPortal.Automation.Configuration.Settings;
-using Xunit;
-using ConfigurationManager = Epam.ReportPortal.Automation.Configuration.Settings.ConfigurationManager;
+﻿using Epam.ReportPortal.Automation.ApiModels.CommonModels;
+using FluentAssertions;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
 
 public abstract class BaseApiSteps
 {
-    protected TestConfiguration config;
-    protected IApiClient client;
-    protected string baseUrl;
-
-    protected BaseApiSteps()
+    public string GetMessageFromResponse(HttpResponseMessage response)
     {
-        config = ConfigurationManager.GetConfiguration();
+        var contentString = response.Content.ReadAsStringAsync().Result;
+        return JsonConvert.DeserializeObject<MessageModel>(contentString).Value;
+    }
 
-        switch (config.ClientType)
-        {
-            case "RestSharp":
-                client = new RestSharpApiClient(config.ApiUrl, config.ApiToken);
-                break;
-            case "HttpClient":
-                client = new HttpClientApiClient(config.ApiUrl, config.ApiToken);
-                break;
-            default:
-                throw new Exception("The client is not supported");
-        }
+    public ErrorMessageModel GetErrorFromResponse(HttpResponseMessage response)
+    {
+        var contentString = response.Content.ReadAsStringAsync().Result;
+        return JsonConvert.DeserializeObject<ErrorMessageModel>(contentString);
     }
 
     public void VerifyResponseCode(HttpResponseMessage response, HttpStatusCode expectedStatusCode)
     {
-        Assert.Equal(expectedStatusCode, response.StatusCode);
+        response.StatusCode.Should().Be(expectedStatusCode);
     }
 }

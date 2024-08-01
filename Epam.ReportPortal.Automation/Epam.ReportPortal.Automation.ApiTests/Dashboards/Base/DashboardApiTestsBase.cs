@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Dashboards;
+using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
 
 public abstract class DashboardApiTestsBase : IDisposable
 {
-    protected DashboardsApiSteps DashboardsApiSteps => new();
+    protected DashboardApiSteps DashboardsApiSteps => new();
 
     public void Dispose()
     {

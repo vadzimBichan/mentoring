@@ -1,4 +1,4 @@
-﻿using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps.Dashboards;
+﻿using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
 using Epam.ReportPortal.Automation.Configuration.Logger;
 using Epam.ReportPortal.Automation.Configuration.Settings;
 using Epam.ReportPortal.Automation.CoreSelenium.Base;
@@ -60,7 +60,7 @@ public sealed class Hooks
         try
         {
             var dashboardIds = _scenarioContext.Get<List<int>>("DashboardIDs");
-            var dashboardsApiSteps = new DashboardsApiSteps();
+            var dashboardsApiSteps = new DashboardApiSteps();
             foreach (var dashboardId in dashboardIds)
             {
                 var response = dashboardsApiSteps.DeleteDashboardRequest(dashboardId);

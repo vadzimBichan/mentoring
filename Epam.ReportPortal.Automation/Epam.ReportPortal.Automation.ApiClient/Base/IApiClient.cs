@@ -1,4 +1,4 @@
-﻿namespace Epam.ReportPortal.Automation.ApiBusinessLayer.Client;
+﻿namespace Epam.ReportPortal.Automation.ApiClient.Base;
 
 public interface IApiClient
 {
