@@ -10,3 +10,6 @@ dotnet_diagnostic.CS8603.severity = silent
 dotnet_diagnostic.CS8602.severity = silent
 # CS8601: Possible null reference assignment.
 dotnet_diagnostic.CS8601.severity = silent
+# xUnit1031: Test methods should not use blocking task operations, as they can cause deadlocks. Use an async test method and await instead.
+dotnet_diagnostic.xUnit1031.severity = silent
+	

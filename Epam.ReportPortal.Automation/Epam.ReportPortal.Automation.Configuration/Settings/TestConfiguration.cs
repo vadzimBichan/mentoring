@@ -10,4 +10,5 @@ public class TestConfiguration
 
     public string ApiUrl { get; set; }
     public string ApiToken { get; set; }
+    public string ClientType { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
-using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
+﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using TechTalk.SpecFlow.Assist;
 
 namespace Epam.ReportPortal.Automation.UiTests.StepsDefinitions;

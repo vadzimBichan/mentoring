@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="111.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Epam.ReportPortal.Automation.ApiClient\Epam.ReportPortal.Automation.ApiClient.csproj" />
     <ProjectReference Include="..\Epam.ReportPortal.Automation.ApiModels\Epam.ReportPortal.Automation.ApiModels.csproj" />
     <ProjectReference Include="..\Epam.ReportPortal.Automation.Configuration\Epam.ReportPortal.Automation.Configuration.csproj" />
   </ItemGroup>
