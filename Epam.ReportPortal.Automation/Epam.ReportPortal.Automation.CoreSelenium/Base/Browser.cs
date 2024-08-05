@@ -4,6 +4,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System.Collections.Concurrent;
 using NUnit.Framework;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
@@ -35,9 +37,14 @@ public class Browser
                 throw new Exception("The browser is not supported");
         }
 
-        newBrowser.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+        newBrowser.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
         newBrowser.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         newBrowser.Driver.Manage().Window.Maximize();
+
+        //var element =
+        //    new WebDriverWait(newBrowser.Driver, TimeSpan.FromSeconds(10)).Until(
+        //        ExpectedConditions.ElementIsVisible(By.Id("myElement")));
+        
         return newBrowser;
     }
 
