@@ -3,10 +3,8 @@ using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Components;
 
-public class FooterComponent : BaseWebComponent
+public class FooterComponent : WebComponent
 {
-    public override IWebElement Root => Driver.FindElement(By.CssSelector("TODO"));
-
     public IWebElement ApplicationVersionLabel => Driver.FindElement(By.CssSelector("TODO"));
 
     public IWebElement GitHubLink => Driver.FindElement(By.CssSelector("TODO"));
@@ -18,4 +16,8 @@ public class FooterComponent : BaseWebComponent
     public IWebElement DocumentationLink => Driver.FindElement(By.CssSelector("TODO"));
 
     public IWebElement PolicyLink => Driver.FindElement(By.CssSelector("TODO"));
+
+    public FooterComponent(IWebDriver driver, By rootLocator) : base(driver, rootLocator)
+    {
+    }
 }

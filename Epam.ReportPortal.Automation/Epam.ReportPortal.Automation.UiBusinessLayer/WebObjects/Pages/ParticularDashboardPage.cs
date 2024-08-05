@@ -1,28 +1,44 @@
 ﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Components;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Modals;
 using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
-public class ParticularDashboardPage : BaseWebPage
+public class ParticularDashboardPage : WebPage
 {
-    public LeftPanelComponent LeftPanel = new ();
+    public LeftSidebarComponent SidebarMenu => new(Driver, By.Id("TODO"));
 
-    public IWebElement AddNewWidgetButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
+    private IWebElement DashboardNameLabel => Driver.FindElement(By.XPath(
+        "//ul[contains(@class, 'pageBreadcrumbs__page-breadcrumbs')]/li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')][2]/span"));
 
-    public IWebElement DashboardNameLabel => Driver.FindElement(By.XPath("//ul[contains(@class, 'pageBreadcrumbs__page-breadcrumbs')]/li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')][2]/span"));
+    private IWebElement AddNewWidgetButton =>
+        Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
 
-    public IWebElement EditDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
+    private IWebElement EditDashboardButton =>
+        Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
 
-    public IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Delete')]"));
+    private IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Delete')]"));
 
-    public IWebElement EditDashboardDialogHeader => Driver.FindElement(By.CssSelector("span[class*='modalHeader__modal-title']"));
-    
-    public IWebElement NameInput => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
+    public EditDashboardDialog EditDashboardDialog => new(Driver, By.Id("TODO"));
 
-    public IWebElement DescriptionInput => Driver.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
+    public void ClickAddNewWidgetButton()
+    {
+        AddNewWidgetButton.Click();
+    }
 
-    public IWebElement UpdateButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Update')]"));
+    public void ClickEditDashboardButton()
+    {
+        EditDashboardButton.Click();
+    }
 
-    public IWebElement CancelButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Cancel')]"));
+    public void ClickDeleteDashboardButton()
+    {
+        DeleteDashboardButton.Click();
+    }
+
+    public string GetDashboardNameInBreadcrumbs()
+    {
+        return DashboardNameLabel.Text;
+    }
 }

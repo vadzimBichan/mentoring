@@ -4,19 +4,19 @@ using NUnit.Framework;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps;
 
-public abstract class BasePageSteps<T> where T : BaseWebPage, new()
+public abstract class BasePageSteps<T> where T : WebPage, new()
 {
-    protected T WebPage { get; } = new();
+    protected T Page { get; } = new();
 
     protected static readonly ILog Log = LogManager.GetLogger(typeof(T));
 
     public void ValidatePageTitle(string expectedTitle)
     {
-        Assert.That(WebPage.GetTitle(), Is.EqualTo(expectedTitle), "Unexpected page title");
+        Assert.That(Page.GetTitle(), Is.EqualTo(expectedTitle), "Unexpected page title");
     }
 
     public void ValidatePageUrl(string expectedUrl)
     {
-        Assert.That(WebPage.GetUrl(), Is.EqualTo(expectedUrl), "Unexpected page url");
+        Assert.That(Page.GetUrl(), Is.EqualTo(expectedUrl), "Unexpected page url");
     }
 }

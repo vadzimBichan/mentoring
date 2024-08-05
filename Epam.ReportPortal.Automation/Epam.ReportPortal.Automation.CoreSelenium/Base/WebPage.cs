@@ -3,11 +3,11 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
-public abstract class BaseWebPage
+public abstract class WebPage
 {
     public readonly IWebDriver Driver;
 
-    protected BaseWebPage()
+    protected WebPage()
     {
         Driver = Browser.GetInstance().Driver;
     }
@@ -22,32 +22,32 @@ public abstract class BaseWebPage
         return Driver.Title;
     }
 
-    public BaseWebPage Back()
+    public WebPage Back()
     {
         Driver.Navigate().Back();
         return this;
     }
 
-    public BaseWebPage Forward()
+    public WebPage Forward()
     {
         Driver.Navigate().Forward();
         return this;
     }
 
-    public BaseWebPage Refresh()
+    public WebPage Refresh()
     {
         Driver.Navigate().Refresh();
         WaitTillPageLoad();
         return this;
     }
 
-    public BaseWebPage ClearCookies()
+    public WebPage ClearCookies()
     {
         Driver.Manage().Cookies.DeleteAllCookies();
         return this;
     }
 
-    public BaseWebPage Open(string url, bool switchToDefaultContent = false)
+    public WebPage Open(string url, bool switchToDefaultContent = false)
     {
         Driver.Navigate().GoToUrl(url);
         WaitTillPageLoad();

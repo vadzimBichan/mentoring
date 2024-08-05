@@ -8,17 +8,17 @@ public class LoginPageSteps : BasePageSteps<LoginPage>
     public void OpenLoginPage()
     {
         Log.Info("Opening Login Page");
-        WebPage.Open(ConfigurationManager.GetConfiguration().WebUrl + "/login");
+        Page.Open(ConfigurationManager.GetConfiguration().WebUrl + "/login");
     }
 
     public void LoginWithCredentials(string login, string password)
     {
         Log.Info("Enter credentials and click login");
-        WebPage.LoginInput.SendKeys(login);
-        WebPage.PasswordInput.SendKeys(password);
-        WebPage.LoginButton.Click();
-        WebPage.WaitTillPageLoad();
-        WebPage.WaitTillAjaxLoad();
+        Page.SetLoginInputValue(login);
+        Page.SetPasswordInputValue(password);
+        Page.ClickLoginButton();
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
     }
 
     public void LoginWithTestUser()
