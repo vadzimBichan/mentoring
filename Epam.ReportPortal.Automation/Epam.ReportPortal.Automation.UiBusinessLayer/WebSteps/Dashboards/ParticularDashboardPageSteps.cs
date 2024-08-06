@@ -7,7 +7,23 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
     public void CloseEditDashboardDialog()
     {
         Log.Info("Closing edit dashboard dialog");
+
         Page.EditDashboardDialog.CLickClose();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public bool IsDeleteDashboardDialogOpened()
+    {
+        Log.Info("Getting delete dialog visibility");
+
+        return Page.DeleteDashboardDialog.IsDialogVisible();
+    }
+
+    public void CloseDeleteDashboardDialog()
+    {
+        Log.Info("Closing delete dashboard dialog");
+
+        Page.DeleteDashboardDialog.CLickClose();
         Page.WaitTillAjaxLoad();
     }
 
@@ -47,6 +63,24 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
             Page.EditDashboardDialog.SetDescriptionInputValue(newDashboardDescription);
         }
         Page.EditDashboardDialog.ClickUpdate();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public void DeleteDashboard()
+    {
+        Log.Info("Deleting dashboard");
+
+        TryDeleteDashboard();
+        Page.DeleteDashboardDialog.ClickDelete(); // confirm delete
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public void TryDeleteDashboard()
+    {
+        Log.Info("Deleting dashboard");
+
+        Page.ClickDeleteDashboardButton();
         Page.WaitTillAjaxLoad();
     }
 }

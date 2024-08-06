@@ -23,7 +23,7 @@ public class ParticularDashboardPage : WebPage
 
     private IWebElement EditDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
 
-    private IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Delete')]"));
+    private IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Delete')]]"));
 
     public void ClickAddNewWidgetButton()
     {

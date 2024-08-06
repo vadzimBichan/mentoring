@@ -9,13 +9,15 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Log.Info("Opening all dashboards");
         Page.SidebarMenu.ClickDashboardsItem();
         Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
     }
 
     public void OpenParticularDashboardPage(string dashboardName)
     {
         Log.Info("Opening particular dashboard page");
-        
         Page.DashboardsTable.ClickDashboardLink(dashboardName);
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
     }
 
     public int CreateDashboard(string dashboardName, string dashboardDescription)
@@ -36,6 +38,40 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Page.WaitTillAjaxLoad();
     }
 
+    public void DeleteDashboardInTable(string dashboardName)
+    {
+        Log.Info("Deleting dashboard");
+        TryDeleteDashboardInTable(dashboardName);
+        Page.DeleteDashboardDialog.ClickDelete(); // confirm delete
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public void TryDeleteDashboardInTable(string dashboardName)
+    {
+        Log.Info("Deleting dashboard");
+        Page.DashboardsTable.ClickDeleteDashboard(dashboardName);
+        Page.WaitTillAjaxLoad();
+    }
+
+    public void UpdateDashboardInTable(string dashboardName, string newDashboardName, string newDashboardDescription)
+    {
+        Log.Info("Updating dashboard");
+        TryUpdateDashboardInTable(dashboardName, newDashboardName, newDashboardDescription);
+        Page.EditDashboardDialog.ClickUpdate(); // confirm update
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public void TryUpdateDashboardInTable(string dashboardName, string newDashboardName, string newDashboardDescription)
+    {
+        Log.Info("Updating dashboard");
+        Page.DashboardsTable.ClickEditDashboard(dashboardName);
+        Page.EditDashboardDialog.SetNameInputValue(newDashboardName);
+        Page.EditDashboardDialog.SetDescriptionInputValue(newDashboardDescription);
+        Page.WaitTillAjaxLoad();
+    }
+
     public void CloseAddNewDashboardDialog()
     {
         Log.Info("Closing new dashboard dialog");
@@ -49,6 +85,36 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Log.Info("Getting new dashboard dialog visibility");
 
         return Page.AddDashboardDialog.IsDialogVisible();
+    }
+
+    public void CloseDeleteDashboardDialog()
+    {
+        Log.Info("Closing delete dashboard dialog");
+        Page.DeleteDashboardDialog.ClickCancel();
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public bool IsDeleteDashboardDialogOpened()
+    {
+        Log.Info("Getting delete dashboard dialog visibility");
+
+        return Page.DeleteDashboardDialog.IsDialogVisible();
+    }
+
+    public void CloseEditDashboardDialog()
+    {
+        Log.Info("Closing edit dashboard dialog");
+        Page.EditDashboardDialog.ClickCancel();
+        Page.WaitTillPageLoad();
+        Page.WaitTillAjaxLoad();
+    }
+
+    public bool IsEditDashboardDialogOpened()
+    {
+        Log.Info("Getting edit dashboard dialog visibility");
+
+        return Page.EditDashboardDialog.IsDialogVisible();
     }
 
     public List<(string Name, string Description, string Owner)> GetDashboards()

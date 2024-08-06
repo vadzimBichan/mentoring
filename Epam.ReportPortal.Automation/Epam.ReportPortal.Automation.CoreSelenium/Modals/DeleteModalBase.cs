@@ -4,7 +4,7 @@ namespace Epam.ReportPortal.Automation.CoreSelenium.Modals;
 
 public class DeleteModalBase : ModalBase
 {
-    private IWebElement DeleteButton => GetRootElement.FindElement(By.CssSelector("div[class^='modalFooter'] button[class*='bigButton__color-booger']"));
+    private IWebElement DeleteButton => GetRootElement.FindElement(By.CssSelector("div[class^='modalFooter'] button[class*='bigButton__color-tomato']"));
 
     private IWebElement CancelButton => GetRootElement.FindElement(By.CssSelector("div[class^='modalFooter'] button[class*='bigButton__color-gray-60']"));
 
