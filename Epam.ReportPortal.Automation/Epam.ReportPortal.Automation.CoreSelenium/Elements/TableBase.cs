@@ -27,6 +27,7 @@ public class TableBase : WebComponent
     {
         return GetRootElement.FindElements(HeaderLocator).ToList();
     }
+
     public int GetHeadersCount()
     {
         return GetHeaders().Count;

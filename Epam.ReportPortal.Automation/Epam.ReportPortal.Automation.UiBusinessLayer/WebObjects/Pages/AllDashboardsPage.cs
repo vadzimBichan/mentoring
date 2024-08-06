@@ -21,17 +21,7 @@ public class AllDashboardsPage : WebPage
 
     public List<(string DashboardName, string DashboardDescription, string DashboardOwner)> GetDashboards()
     {
-        var result = new List<(string DashboardName, string DashboardDescription, string DashboardOwner)>();
-        var rowsCount = DashboardsTable.GetRowsCount();
-        for (var i = 0; i < rowsCount; i++)
-        {
-            result.Add((
-                DashboardsTable.GetDashboardName(i),
-                DashboardsTable.GetDashboardDescription(i),
-                DashboardsTable.GetDashboardOwner(i)));
-        }
-
-        return result;
+        return DashboardsTable.GetDashboards();
     }
 
     public void ClickAddNewDashboardButton()

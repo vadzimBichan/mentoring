@@ -15,6 +15,8 @@ public class ParticularDashboardPage : WebPage
 
     public DeleteDashboardDialog DeleteDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
+    public WidgetsContainer WidgetsContainer => new WidgetsContainer(Driver, By.CssSelector("div[class*='widgets-grid']"));
+
     private IWebElement DashboardNameLabel => Driver.FindElement(By.XPath("//li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')]/span[@title]"));
 
     private IWebElement AddNewWidgetButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));

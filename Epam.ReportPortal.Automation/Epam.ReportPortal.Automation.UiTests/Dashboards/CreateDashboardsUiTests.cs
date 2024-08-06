@@ -23,6 +23,7 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         var dashboardName = StringUtils.GenerateRandomString(dashboardNameLength);
         AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.False);
+        Assert.That(ParticularDashboardSteps.GetWidgetsCount(), Is.EqualTo(1));
 
         AllDashboardsSteps.OpenAllDashboardsPage();
         Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));

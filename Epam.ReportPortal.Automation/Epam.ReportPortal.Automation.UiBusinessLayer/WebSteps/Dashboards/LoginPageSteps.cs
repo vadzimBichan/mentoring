@@ -29,6 +29,6 @@ public class LoginPageSteps : BasePageSteps<LoginPage>
 
     public void ClickForgotPasswordLink()
     {
-        throw new NotImplementedException("TODO: Not implemented!");
+        Page.ClickForgotPasswordLink();
     }
 }

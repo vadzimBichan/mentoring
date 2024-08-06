@@ -13,8 +13,9 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
 
     public void OpenParticularDashboardPage(string dashboardName)
     {
-        Log.Info("Checking particular dashboard page");
-        throw new NotImplementedException("TODO: Not implemented!");
+        Log.Info("Opening particular dashboard page");
+        
+        Page.DashboardsTable.ClickDashboardLink(dashboardName);
     }
 
     public int CreateDashboard(string dashboardName, string dashboardDescription)

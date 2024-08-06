@@ -22,7 +22,7 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
     {
         Log.Info("Getting widgets count");
 
-        return -1;
+        return Page.WidgetsContainer.GetWidgetsCount();
     }
 
     public string GetDashboardNameInBreadcrumbs()
