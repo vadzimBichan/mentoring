@@ -1,6 +1,9 @@
-﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+﻿using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
+using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
+using System.Net;
+using System.Net.Mail;
 
 namespace Epam.ReportPortal.Automation.UiTests.Base;
 
@@ -14,12 +17,34 @@ public abstract class ReportPortalUiTestsBaseWithInstancePerTest
     public void BeforeEach()
     {
         Browser.GetInstance();
+        CreatedResources.GetResources();
     }
 
     [TearDown]
     public void AfterEach()
     {
         Browser.Close();
+
+        try
+        {
+            var dashboardsApiSteps = new DashboardApiSteps();
+            foreach (var dashboardId in CreatedResources.GetResources().Dashboards)
+            {
+                var response = dashboardsApiSteps.DeleteDashboardRequest(dashboardId);
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception($"Dashboard with id = '{dashboardId}' was not deleted! Response status code = '{response.StatusCode}'");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            CreatedResources.CleanDashboards();
+        }
     }
 
     public void CheckDashboardExistsInTheTable(List<Dashboard> dashboards, string dashboardName, string dashboardDescription)

@@ -1,4 +1,5 @@
-﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
+﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
@@ -25,7 +26,10 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
     {
         Log.Info("Creating new dashboard");
         TryCreateDashboard(dashboardName, dashboardDescription);
-        return int.Parse(Page.GetUrl().Split('/').Last()); // return dashboard id from url
+        
+        var dashboardId = int.Parse(Page.GetUrl().Split('/').Last()); // dashboard id from url
+        CreatedResources.GetResources().Dashboards.Add(dashboardId); // add dashboard id to created resources
+        return dashboardId;
     }
 
     public void TryCreateDashboard(string dashboardName, string dashboardDescription)

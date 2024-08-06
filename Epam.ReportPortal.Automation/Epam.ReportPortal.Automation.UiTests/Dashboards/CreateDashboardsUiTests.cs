@@ -1,6 +1,5 @@
 ﻿using Epam.ReportPortal.Automation.Core.Utils;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
-using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
 using Epam.ReportPortal.Automation.UiTests.Base;
 
 namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
@@ -26,7 +25,7 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         Assert.That(ParticularDashboardSteps.GetWidgetsCount(), Is.EqualTo(0));
 
         AllDashboardsSteps.OpenAllDashboardsPage();
-        CheckDashboardExistsInTheTable(AllDashboardsSteps.GetDashboards(), dashboardName, "Test Description)");
+        CheckDashboardExistsInTheTable(AllDashboardsSteps.GetDashboards(), dashboardName, "Test Description");
     }
 
     [Test]
@@ -41,14 +40,14 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
 
         AllDashboardsSteps.OpenAllDashboardsPage();
         var dashboardsBefore = AllDashboardsSteps.GetDashboards();
-        Assert.That(GetDashboardsInTheTable(dashboardsBefore, dashboardName, "Test Description)").Count, Is.EqualTo(1));
+        Assert.That(GetDashboardsInTheTable(dashboardsBefore, dashboardName, "Test Description").Count, Is.EqualTo(1));
 
         AllDashboardsSteps.TryCreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
 
         AllDashboardsSteps.CloseAddNewDashboardDialog();
         var dashboardsAfter = AllDashboardsSteps.GetDashboards();
-        Assert.That(GetDashboardsInTheTable(dashboardsAfter, dashboardName, "Test Description)").Count, Is.EqualTo(1));
+        Assert.That(GetDashboardsInTheTable(dashboardsAfter, dashboardName, "Test Description").Count, Is.EqualTo(1));
     }
 
     [Test]
@@ -65,7 +64,7 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         AllDashboardsSteps.CloseAddNewDashboardDialog();
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.False);
         var dashboardsAfter = AllDashboardsSteps.GetDashboards();
-        Assert.That(GetDashboardsInTheTable(dashboardsAfter, dashboardName, "Test Description)").Count, Is.EqualTo(0));
+        Assert.That(GetDashboardsInTheTable(dashboardsAfter, dashboardName, "Test Description").Count, Is.EqualTo(0));
     }
 
     public static IEnumerable<int> AllowedLengthData()
