@@ -5,6 +5,7 @@ using OpenQA.Selenium.Firefox;
 using System.Collections.Concurrent;
 using NUnit.Framework;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Remote;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
@@ -23,16 +24,25 @@ public class Browser
     {
         var configuration = ConfigurationManager.GetConfiguration();
         Browser newBrowser = new Browser();
-        switch (configuration.BrowserType)
+        if (!configuration.UseGrid)
         {
-            case "Chrome":
-                newBrowser.Driver = new ChromeDriver();
-                break;
-            case "Firefox":
-                newBrowser.Driver = new FirefoxDriver();
-                break;
-            default:
-                throw new Exception("The browser is not supported");
+            newBrowser.Driver = configuration.BrowserType switch
+            {
+                "Chrome" => new ChromeDriver(),
+                "Firefox" => new FirefoxDriver(),
+                _ => throw new Exception("The browser is not supported")
+            };
+        }
+        else
+        {
+            DriverOptions options = configuration.BrowserType switch
+            {
+                "Chrome" => new ChromeOptions(),
+                "Firefox" => new ChromeOptions(),
+                _ => throw new Exception("The browser is not supported")
+            };
+
+            newBrowser.Driver = new RemoteWebDriver(new Uri(configuration.GridUrl), options);
         }
 
         newBrowser.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
