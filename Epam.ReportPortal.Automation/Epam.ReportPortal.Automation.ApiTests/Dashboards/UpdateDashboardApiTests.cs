@@ -6,6 +6,10 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
 public class UpdateDashboardApiTests : DashboardApiTestsBase
 {
+    public UpdateDashboardApiTests() : base(nameof(UpdateDashboardApiTests))
+    {
+    }
+
     [Theory]
     [InlineData("", "[Field 'name' should not contain only white spaces and shouldn't be empty. Field 'name' should have size from '3' to '128'.] ")]
     [InlineData(" ", "[Field 'name' should not contain only white spaces and shouldn't be empty. Field 'name' should have size from '3' to '128'.] ")]

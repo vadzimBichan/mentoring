@@ -3,7 +3,6 @@ using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
 using System.Net;
-using System.Net.Mail;
 
 namespace Epam.ReportPortal.Automation.UiTests.Base;
 
@@ -27,7 +26,7 @@ public abstract class ReportPortalUiTestsBaseWithInstancePerTest
 
         try
         {
-            var dashboardsApiSteps = new DashboardApiSteps();
+            var dashboardsApiSteps = new DashboardApiSteps(string.Empty);
             foreach (var dashboardId in CreatedResources.GetResources().Dashboards)
             {
                 var response = dashboardsApiSteps.DeleteDashboardRequest(dashboardId);

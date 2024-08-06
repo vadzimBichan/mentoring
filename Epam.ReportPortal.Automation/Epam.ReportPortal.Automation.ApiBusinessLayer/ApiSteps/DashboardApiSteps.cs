@@ -8,12 +8,17 @@ namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
 
 public partial class DashboardApiSteps : BaseApiSteps
 {
+    public DashboardApiSteps(string testName) : base(testName)
+    {
+    }
+
     public int CreateDashboard(string name, string description)
     {
         var dashboardModel = new DashboardCreateRequestModel { Name = name, Description = description };
         var response = CreateDashboardRequest(dashboardModel);
         var contentString = response.Content.ReadAsStringAsync().Result;
         var createdDashboardId = JsonConvert.DeserializeObject<IdModel>(contentString).Value;
+        CreatedResources.GetResources(TestName).Dashboards.Add(createdDashboardId);
 
         return createdDashboardId;
     }
@@ -83,10 +88,5 @@ public partial class DashboardApiSteps : BaseApiSteps
         var dashboards = JsonConvert.DeserializeObject<DashboardGetAllResponseModels>(contentString).Dashboards;
 
         return dashboards;
-    }
-
-    public int GetDashboardsCount()
-    {
-        return GetDashboardsList().Count;
     }
 }

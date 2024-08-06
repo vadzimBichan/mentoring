@@ -6,19 +6,23 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
 public class CreateDashboardApiTests : DashboardApiTestsBase
 {
+    public CreateDashboardApiTests() : base(nameof(CreateDashboardApiTests))
+    {
+    }
+
     [Fact]
     public void ItIsImpossibleToCreateDashboardWithDuplicatedName()
     {
         const int expectedErrorCode = 4091;
-        var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
         var dashboardName = $"DN_{StringUtils.GenerateRandomString(10)}";
-        DashboardsApiSteps.CreateDashboard(dashboardName, "Test Description");
-        Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
+        var dashboardId = DashboardsApiSteps.CreateDashboard(dashboardName, "Test Description");
+        Assert.NotNull(DashboardsApiSteps.GetDashboardById(dashboardId));
 
         var message = DashboardsApiSteps.CreateDashboardWithError(dashboardName, "Test Description", HttpStatusCode.Conflict);
         Assert.Equal($"Resource '{dashboardName}' already exists. You couldn't create the duplicate.", message.Value);
         Assert.Equal(expectedErrorCode, message.ErrorCode);
-        Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
+        Assert.Equal(1, DashboardsApiSteps.GetDashboardsList().Count(d => d.Id == dashboardId));
+        Assert.Equal(1, DashboardsApiSteps.GetDashboardsList().Count(d => d.Name == dashboardName));
     }
 
     [Theory]
@@ -29,10 +33,9 @@ public class CreateDashboardApiTests : DashboardApiTestsBase
     public void ItIsImpossibleToCreateDashboardWithNameHavingLessThanThreeSymbols(string dashboardName, string expectedMessage)
     {
         const int expectedErrorCode = 4001;
-        var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
         var message = DashboardsApiSteps.CreateDashboardWithError(dashboardName, "Test Description", HttpStatusCode.BadRequest);
         Assert.Equal(expectedMessage, message.Value);
         Assert.Equal(expectedErrorCode, message.ErrorCode);
-        Assert.Equal(initialDashboardsCount, DashboardsApiSteps.GetDashboardsCount());
+        Assert.Equal(0, DashboardsApiSteps.GetDashboardsList().Count(d => d.Name == dashboardName));
     }
 }

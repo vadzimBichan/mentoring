@@ -60,12 +60,11 @@ public sealed class Hooks
         try
         {
             var dashboardIds = _scenarioContext.Get<List<int>>("DashboardIDs");
-            var dashboardsApiSteps = new DashboardApiSteps();
+            var dashboardsApiSteps = new DashboardApiSteps(string.Empty);
             foreach (var dashboardId in dashboardIds)
             {
                 var response = dashboardsApiSteps.DeleteDashboardRequest(dashboardId);
-                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK),
-                    $"Issues with removing dashboard with id = '{dashboardId}'!");
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"Issues with removing dashboard with id = '{dashboardId}'!");
             }
         }
         catch (Exception e)
