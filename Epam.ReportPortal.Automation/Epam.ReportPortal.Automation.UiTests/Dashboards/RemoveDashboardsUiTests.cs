@@ -26,20 +26,16 @@ public class RemoveDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithTestUser();
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
 
         AllDashboardsSteps.CreateDashboard(_dashboardName, _dashboardDescription);
         AllDashboardsSteps.OpenAllDashboardsPage();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        var dashboardsBefore = AllDashboardsSteps.GetDashboards();
+        CheckDashboardExistsInTheTable(dashboardsBefore, _dashboardName, _dashboardDescription);
 
         AllDashboardsSteps.DeleteDashboardInTable(_dashboardName);
 
-        var dashboards = AllDashboardsSteps.GetDashboards();
-        Assert.That(dashboards.Count, Is.EqualTo(initialDashboardsCount));
-        Assert.That(
-            dashboards.Count(x => x.Name == _dashboardName && x.Description == _dashboardDescription),
-            Is.EqualTo(0),
-            $"Dashboards table is NOT expected to have dashboard with name = '{_dashboardName}' and description = '{_dashboardDescription}'!");
+        var dashboardsAfter = AllDashboardsSteps.GetDashboards();
+        CheckDashboardDoesNotExistInTheTable(dashboardsAfter, _dashboardName, _dashboardDescription);
     }
 
     [Test]
@@ -57,10 +53,7 @@ public class RemoveDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         AllDashboardsSteps.CloseDeleteDashboardDialog();
 
         var dashboards = AllDashboardsSteps.GetDashboards();
-        Assert.That(
-            dashboards.Count(x => x.Name == _dashboardName && x.Description == _dashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected to have ONE dashboard with name = '{_dashboardName}' and description = '{_dashboardDescription}'!");
+        CheckDashboardExistsInTheTable(dashboards, _dashboardName, _dashboardDescription);
     }
 
     [Test]
@@ -68,21 +61,17 @@ public class RemoveDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithTestUser();
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
 
         AllDashboardsSteps.CreateDashboard(_dashboardName, _dashboardDescription);
         AllDashboardsSteps.OpenAllDashboardsPage();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        var dashboardsBefore = AllDashboardsSteps.GetDashboards();
+        CheckDashboardExistsInTheTable(dashboardsBefore, _dashboardName, _dashboardDescription);
 
         AllDashboardsSteps.OpenParticularDashboardPage(_dashboardName);
         ParticularDashboardSteps.DeleteDashboard();
 
-        var dashboards = AllDashboardsSteps.GetDashboards();
-        Assert.That(dashboards.Count, Is.EqualTo(initialDashboardsCount));
-        Assert.That(
-            dashboards.Count(x => x.Name == _dashboardName && x.Description == _dashboardDescription),
-            Is.EqualTo(0),
-            $"Dashboards table is NOT expected to have dashboard with name = '{_dashboardName}' and description = '{_dashboardDescription}'!");
+        var dashboardsAfter = AllDashboardsSteps.GetDashboards();
+        CheckDashboardDoesNotExistInTheTable(dashboardsAfter, _dashboardName, _dashboardDescription);
     }
 
     [Test]
@@ -100,9 +89,6 @@ public class RemoveDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         AllDashboardsSteps.OpenAllDashboardsPage();
 
         var dashboards = AllDashboardsSteps.GetDashboards();
-        Assert.That(
-            dashboards.Count(x => x.Name == _dashboardName && x.Description == _dashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected to have ONE dashboard with name = '{_dashboardName}' and description = '{_dashboardDescription}'!");
+        CheckDashboardExistsInTheTable(dashboards, _dashboardName, _dashboardDescription);
     }
 }

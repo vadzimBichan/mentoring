@@ -1,5 +1,6 @@
 ﻿using Epam.ReportPortal.Automation.Core.Utils;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
 using Epam.ReportPortal.Automation.UiTests.Base;
 
 namespace Epam.ReportPortal.Automation.UiTests.Dashboards;
@@ -19,14 +20,13 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
         var dashboardName = StringUtils.GenerateRandomString(dashboardNameLength);
         AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.False);
         Assert.That(ParticularDashboardSteps.GetWidgetsCount(), Is.EqualTo(0));
 
         AllDashboardsSteps.OpenAllDashboardsPage();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        CheckDashboardExistsInTheTable(AllDashboardsSteps.GetDashboards(), dashboardName, "Test Description)");
     }
 
     [Test]
@@ -36,18 +36,19 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
         var dashboardName = StringUtils.GenerateRandomString(10);
         AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
 
         AllDashboardsSteps.OpenAllDashboardsPage();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        var dashboardsBefore = AllDashboardsSteps.GetDashboards();
+        Assert.That(GetDashboardsInTheTable(dashboardsBefore, dashboardName, "Test Description)").Count, Is.EqualTo(1));
 
         AllDashboardsSteps.TryCreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
 
         AllDashboardsSteps.CloseAddNewDashboardDialog();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        var dashboardsAfter = AllDashboardsSteps.GetDashboards();
+        Assert.That(GetDashboardsInTheTable(dashboardsAfter, dashboardName, "Test Description)").Count, Is.EqualTo(1));
     }
 
     [Test]
@@ -58,13 +59,13 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         LoginPageSteps.LoginWithTestUser();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
         AllDashboardsSteps.TryCreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
 
         AllDashboardsSteps.CloseAddNewDashboardDialog();
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.False);
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount));
+        var dashboardsAfter = AllDashboardsSteps.GetDashboards();
+        Assert.That(GetDashboardsInTheTable(dashboardsAfter, dashboardName, "Test Description)").Count, Is.EqualTo(0));
     }
 
     public static IEnumerable<int> AllowedLengthData()

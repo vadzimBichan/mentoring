@@ -1,4 +1,5 @@
 ﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
@@ -117,13 +118,8 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         return Page.EditDashboardDialog.IsDialogVisible();
     }
 
-    public List<(string Name, string Description, string Owner)> GetDashboards()
+    public List<Dashboard> GetDashboards()
     {
-        return Page.GetDashboards();
-    }
-
-    public int GetDashboardsCount()
-    {
-        return GetDashboards().Count;
+        return Page.GetDashboards().Select(tuple => new Dashboard(tuple.DashboardName, tuple.DashboardDescription, tuple.DashboardOwner)).ToList();
     }
 }

@@ -29,24 +29,17 @@ public class EditDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePerT
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithTestUser();
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
 
         AllDashboardsSteps.CreateDashboard(_dashboardName, _dashboardDescription);
         AllDashboardsSteps.OpenAllDashboardsPage();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        CheckDashboardExistsInTheTable(AllDashboardsSteps.GetDashboards(), _dashboardName, _dashboardDescription);
 
         AllDashboardsSteps.UpdateDashboardInTable(_dashboardName, _newDashboardName, _newDashboardDescription);
         Assert.That(AllDashboardsSteps.IsEditDashboardDialogOpened(), Is.False);
 
         var dashboards = AllDashboardsSteps.GetDashboards();
-        Assert.That(
-            dashboards.Count(x => x.Name == _dashboardName && x.Description == _dashboardDescription),
-            Is.EqualTo(0),
-            $"Dashboards table is NOT expected to have dashboard with name = '{_dashboardName}' and description = '{_dashboardDescription}'!");
-        Assert.That(
-            dashboards.Count(x => x.Name == _newDashboardName && x.Description == _newDashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected to have ONE dashboard with name = '{_newDashboardName}' and description = '{_newDashboardDescription}'!");
+        CheckDashboardDoesNotExistInTheTable(dashboards, _dashboardName, _dashboardDescription);
+        CheckDashboardExistsInTheTable(dashboards, _newDashboardName, _newDashboardDescription);
     }
 
     [Test]
@@ -55,24 +48,17 @@ public class EditDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePerT
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithTestUser();
-        var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
 
         AllDashboardsSteps.CreateDashboard(_dashboardName, _dashboardDescription);
         AllDashboardsSteps.OpenAllDashboardsPage();
-        Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
+        CheckDashboardExistsInTheTable(AllDashboardsSteps.GetDashboards(), _dashboardName, _dashboardDescription);
 
         AllDashboardsSteps.TryUpdateDashboardInTable(_dashboardName, _newDashboardName, _newDashboardDescription);
         Assert.That(AllDashboardsSteps.IsEditDashboardDialogOpened(), Is.True);
 
         AllDashboardsSteps.CloseDeleteDashboardDialog();
         var dashboards = AllDashboardsSteps.GetDashboards();
-        Assert.That(
-            dashboards.Count(x => x.Name == _dashboardName && x.Description == _dashboardDescription),
-            Is.EqualTo(1),
-            $"Dashboards table is expected to have ONE dashboard with name = '{_dashboardName}' and description = '{_dashboardDescription}'!");
-        Assert.That(
-            dashboards.Count(x => x.Name == _newDashboardName && x.Description == _newDashboardDescription),
-            Is.EqualTo(0),
-            $"Dashboards table is NOT expected to have dashboard with name = '{_newDashboardName}' and description = '{_newDashboardDescription}'!");
+        CheckDashboardDoesNotExistInTheTable(dashboards, _newDashboardName, _newDashboardDescription);
+        CheckDashboardExistsInTheTable(dashboards, _dashboardName, _dashboardDescription);
     }
 }
