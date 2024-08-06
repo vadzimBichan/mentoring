@@ -9,6 +9,7 @@ public class LoginPageSteps : BasePageSteps<LoginPage>
     {
         Log.Info("Opening Login Page");
         Page.Open(ConfigurationManager.GetConfiguration().WebUrl + "/login");
+        Browser.WaitTillPageLoad();
     }
 
     public void LoginWithCredentials(string login, string password)
@@ -17,8 +18,8 @@ public class LoginPageSteps : BasePageSteps<LoginPage>
         Page.SetLoginInputValue(login);
         Page.SetPasswordInputValue(password);
         Page.ClickLoginButton();
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void LoginWithTestUser()

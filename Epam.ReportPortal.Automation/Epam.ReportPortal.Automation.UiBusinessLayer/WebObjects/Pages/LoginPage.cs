@@ -41,7 +41,9 @@ public class LoginPage : WebPage
 
     public void ClickLoginButton()
     {
-        LoginButton.Click();
+        // TODO: ONLY AS EXAMPLE
+        // LoginButton.Click();
+        ClickViaJs(LoginButton);
     }
 
     public void ClickForgotPasswordLink()

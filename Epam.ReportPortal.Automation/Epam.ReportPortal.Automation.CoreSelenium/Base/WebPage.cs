@@ -1,16 +1,10 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 
 namespace Epam.ReportPortal.Automation.CoreSelenium.Base;
 
 public abstract class WebPage
 {
-    public readonly IWebDriver Driver;
-
-    protected WebPage()
-    {
-        Driver = Browser.GetInstance().Driver;
-    }
+    public readonly IWebDriver Driver = Browser.GetInstance().Driver;
 
     public string GetUrl()
     {
@@ -22,35 +16,9 @@ public abstract class WebPage
         return Driver.Title;
     }
 
-    public WebPage Back()
-    {
-        Driver.Navigate().Back();
-        return this;
-    }
-
-    public WebPage Forward()
-    {
-        Driver.Navigate().Forward();
-        return this;
-    }
-
-    public WebPage Refresh()
-    {
-        Driver.Navigate().Refresh();
-        WaitTillPageLoad();
-        return this;
-    }
-
-    public WebPage ClearCookies()
-    {
-        Driver.Manage().Cookies.DeleteAllCookies();
-        return this;
-    }
-
     public WebPage Open(string url, bool switchToDefaultContent = false)
     {
         Driver.Navigate().GoToUrl(url);
-        WaitTillPageLoad();
         if (switchToDefaultContent) Driver.SwitchTo().DefaultContent();
 
         return this;
@@ -60,111 +28,8 @@ public abstract class WebPage
     {
         Driver.Quit();
     }
-
-    /// <summary>
-    ///     Scroll whole page to Top
-    /// </summary>
-    public void ScrollTop()
+    public void ClickViaJs(IWebElement element)
     {
-        ExecuteScript("$(window).scrollTop(0)");
-        WaitTillAjaxLoad();
+        ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", element);
     }
-
-    /// <summary>
-    ///     Scroll whole page to Bottom
-    /// </summary>
-    public void ScrollBottom()
-    {
-        ExecuteScript("$(window).scrollTop($(document).height())");
-        WaitTillAjaxLoad();
-    }
-
-    public bool WaitTillPageLoad(int numberOfSeconds = 10)
-    {
-        try
-        {
-            Wait(numberOfSeconds).Until(driver =>
-            {
-                try
-                {
-                    return ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString()
-                        .Contains("complete");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return false;
-                }
-            });
-        }
-        catch (WebDriverTimeoutException)
-        {
-            // page is not loaded (other exceptions are caught)
-        }
-
-        return false;
-    }
-
-    public bool WaitTillAjaxLoad(int numberOfSeconds = 10)
-    {
-        try
-        {
-            Wait(numberOfSeconds).Until(driver =>
-            {
-                try
-                {
-                    return (bool)((IJavaScriptExecutor)driver).ExecuteScript(
-                        "return (typeof jQuery != 'undefined') && (jQuery.active === 0)");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return false;
-                }
-            });
-        }
-        catch (WebDriverTimeoutException)
-        {
-            // page is not loaded (other exceptions are caught)
-        }
-
-        return false;
-    }
-
-    public WebDriverWait Wait(int numberOfSeconds = 10)
-    {
-        return new WebDriverWait(Driver, TimeSpan.FromSeconds(numberOfSeconds));
-    }
-
-    public object ExecuteScript(string script, params object[] args)
-    {
-        try
-        {
-            return ((IJavaScriptExecutor)Driver).ExecuteScript(script, args);
-        }
-        catch (WebDriverTimeoutException)
-        {
-            Console.WriteLine(
-                $"Error: Exception thrown while running JS Script:{Environment.NewLine}  {script}"); // todo: use logger
-        }
-
-        return null;
-    }
-
-    public object ExecuteAsyncScript(string script, params object[] args)
-    {
-        try
-        {
-            return ((IJavaScriptExecutor)Driver).ExecuteAsyncScript(script, args);
-        }
-        catch (WebDriverTimeoutException)
-        {
-            Console.WriteLine(
-                $"Error: Exception thrown while running JS Script:{Environment.NewLine}  {script}"); // todo: use logger
-        }
-
-        return null;
-    }
-
-    public Screenshot GetScreenshot => ((ITakesScreenshot)Driver).GetScreenshot();
 }

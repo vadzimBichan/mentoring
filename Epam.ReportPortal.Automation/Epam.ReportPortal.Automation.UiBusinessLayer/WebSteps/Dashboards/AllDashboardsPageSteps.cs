@@ -8,16 +8,16 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
     {
         Log.Info("Opening all dashboards");
         Page.SidebarMenu.ClickDashboardsItem();
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void OpenParticularDashboardPage(string dashboardName)
     {
         Log.Info("Opening particular dashboard page");
         Page.DashboardsTable.ClickDashboardLink(dashboardName);
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public int CreateDashboard(string dashboardName, string dashboardDescription)
@@ -34,8 +34,8 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Page.AddDashboardDialog.SetNameInputValue(dashboardName);
         Page.AddDashboardDialog.SetDescriptionInputValue(dashboardDescription);
         Page.AddDashboardDialog.ClickAdd();
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void DeleteDashboardInTable(string dashboardName)
@@ -43,15 +43,15 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Log.Info("Deleting dashboard");
         TryDeleteDashboardInTable(dashboardName);
         Page.DeleteDashboardDialog.ClickDelete(); // confirm delete
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void TryDeleteDashboardInTable(string dashboardName)
     {
         Log.Info("Deleting dashboard");
         Page.DashboardsTable.ClickDeleteDashboard(dashboardName);
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void UpdateDashboardInTable(string dashboardName, string newDashboardName, string newDashboardDescription)
@@ -59,8 +59,8 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Log.Info("Updating dashboard");
         TryUpdateDashboardInTable(dashboardName, newDashboardName, newDashboardDescription);
         Page.EditDashboardDialog.ClickUpdate(); // confirm update
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void TryUpdateDashboardInTable(string dashboardName, string newDashboardName, string newDashboardDescription)
@@ -69,15 +69,15 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
         Page.DashboardsTable.ClickEditDashboard(dashboardName);
         Page.EditDashboardDialog.SetNameInputValue(newDashboardName);
         Page.EditDashboardDialog.SetDescriptionInputValue(newDashboardDescription);
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public void CloseAddNewDashboardDialog()
     {
         Log.Info("Closing new dashboard dialog");
         Page.AddDashboardDialog.ClickCancel();
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public bool IsAddNewDashboardDialogOpened()
@@ -91,8 +91,8 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
     {
         Log.Info("Closing delete dashboard dialog");
         Page.DeleteDashboardDialog.ClickCancel();
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public bool IsDeleteDashboardDialogOpened()
@@ -106,8 +106,8 @@ public class AllDashboardsPageSteps : BasePageSteps<AllDashboardsPage>
     {
         Log.Info("Closing edit dashboard dialog");
         Page.EditDashboardDialog.ClickCancel();
-        Page.WaitTillPageLoad();
-        Page.WaitTillAjaxLoad();
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
     }
 
     public bool IsEditDashboardDialogOpened()
