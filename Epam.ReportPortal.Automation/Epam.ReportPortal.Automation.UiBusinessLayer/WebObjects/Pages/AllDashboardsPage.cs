@@ -7,20 +7,31 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class AllDashboardsPage : WebPage
 {
-    public LeftSidebarComponent SidebarMenu => new LeftSidebarComponent(Driver, By.Id("TODO"));
+    public LeftSidebarComponent SidebarMenu => new LeftSidebarComponent(Driver, By.CssSelector("aside[class*='sidebar__sidebar']"));
 
-    public AddDashboardDialog AddDashboardDialog => new AddDashboardDialog(Driver, By.Id("TODO"));
+    public AddDashboardDialog AddDashboardDialog => new AddDashboardDialog(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
+
+    public EditDashboardDialog EditDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']")); // via table
+
+    public DeleteDashboardDialog DeleteDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']")); // via table
+
+    public DashboardsTable DashboardsTable => new DashboardsTable(Driver, By.CssSelector("div[class*='dashboardTable__dashboard-table']"));
 
     private IWebElement AddNewDashboardButton => Driver.FindElement(By.CssSelector("div[class*='addDashboardButton']>button"));
-    
-    private IReadOnlyList<IWebElement> DashboardsList => Driver.FindElements(By.CssSelector("div[class*='gridRow__grid-row'][data-id]"));
 
     public List<(string DashboardName, string DashboardDescription, string DashboardOwner)> GetDashboards()
     {
-        return DashboardsList.Select(row => (
-            row.FindElement(By.XPath(".//a[contains(@class, 'dashboardTable__name')]")).Text,
-            row.FindElement(By.XPath(".//div[contains(@class, 'dashboardTable__description')]")).Text,
-            row.FindElement(By.XPath(".//div[contains(@class, 'dashboardTable__owner')]")).Text)).ToList();
+        var result = new List<(string DashboardName, string DashboardDescription, string DashboardOwner)>();
+        var rowsCount = DashboardsTable.GetRowsCount();
+        for (var i = 0; i < rowsCount; i++)
+        {
+            result.Add((
+                DashboardsTable.GetDashboardName(i),
+                DashboardsTable.GetDashboardDescription(i),
+                DashboardsTable.GetDashboardOwner(i)));
+        }
+
+        return result;
     }
 
     public void ClickAddNewDashboardButton()

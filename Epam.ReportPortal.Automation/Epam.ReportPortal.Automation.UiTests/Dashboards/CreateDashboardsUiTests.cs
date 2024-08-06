@@ -42,7 +42,7 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
         AllDashboardsSteps.OpenAllDashboardsPage();
         Assert.That(AllDashboardsSteps.GetDashboardsCount(), Is.EqualTo(initialDashboardsCount + 1));
 
-        AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
+        AllDashboardsSteps.TryCreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
 
         AllDashboardsSteps.CloseAddNewDashboardDialog();
@@ -58,7 +58,7 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var initialDashboardsCount = AllDashboardsSteps.GetDashboardsCount();
-        AllDashboardsSteps.CreateDashboard(dashboardName, "Test Description");
+        AllDashboardsSteps.TryCreateDashboard(dashboardName, "Test Description");
         Assert.That(AllDashboardsSteps.IsAddNewDashboardDialogOpened(), Is.True);
 
         AllDashboardsSteps.CloseAddNewDashboardDialog();

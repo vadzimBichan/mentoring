@@ -7,20 +7,21 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
 public class ParticularDashboardPage : WebPage
 {
-    public LeftSidebarComponent SidebarMenu => new(Driver, By.Id("TODO"));
+    public LeftSidebarComponent SidebarMenu => new(Driver, By.CssSelector("aside[class*='sidebar__sidebar']"));
 
-    private IWebElement DashboardNameLabel => Driver.FindElement(By.XPath(
-        "//ul[contains(@class, 'pageBreadcrumbs__page-breadcrumbs')]/li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')][2]/span"));
+    public AddDashboardDialog AddDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
-    private IWebElement AddNewWidgetButton =>
-        Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
+    public EditDashboardDialog EditDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
-    private IWebElement EditDashboardButton =>
-        Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
+    public DeleteDashboardDialog DeleteDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
+
+    private IWebElement DashboardNameLabel => Driver.FindElement(By.XPath("//li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')]/span[@title]"));
+
+    private IWebElement AddNewWidgetButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
+
+    private IWebElement EditDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
 
     private IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Delete')]"));
-
-    public EditDashboardDialog EditDashboardDialog => new(Driver, By.Id("TODO"));
 
     public void ClickAddNewWidgetButton()
     {

@@ -35,6 +35,7 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
     public void EditDashboardNameAndDescription(string? newDashboardName = null, string? newDashboardDescription = null)
     {
         Log.Info("Updating dashboard name and description");
+
         Page.ClickEditDashboardButton();
         if (newDashboardName != null)
         {
@@ -43,7 +44,7 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
 
         if (newDashboardDescription != null)
         {
-            Page.EditDashboardDialog.SetNameInputValue(newDashboardName);
+            Page.EditDashboardDialog.SetDescriptionInputValue(newDashboardDescription);
         }
         Page.EditDashboardDialog.ClickUpdate();
         Page.WaitTillAjaxLoad();

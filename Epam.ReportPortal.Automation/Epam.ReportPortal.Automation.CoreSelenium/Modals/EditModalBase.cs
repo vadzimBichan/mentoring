@@ -4,25 +4,18 @@ namespace Epam.ReportPortal.Automation.CoreSelenium.Modals;
 
 public class EditModalBase : ModalBase
 {
-    private IWebElement UpdateButton => GetRootElement.FindElement(By.XPath("//button[contains(text(), 'Update')]"));
+    private IWebElement UpdateButton => GetRootElement.FindElement(By.CssSelector("div[class^='modalFooter'] button[class*='bigButton__color-booger']"));
 
-    private IWebElement CancelButton => GetRootElement.FindElement(By.XPath("//button[contains(text(), 'Cancel')]"));
+    private IWebElement CancelButton => GetRootElement.FindElement(By.CssSelector("div[class^='modalFooter'] button[class*='bigButton__color-gray-60']"));
 
     public EditModalBase(IWebDriver driver, By rootLocator) : base(driver, rootLocator)
     {
     }
 
-    public void ClickUpdate(bool shouldModalCloses = true)
+    public void ClickUpdate()
     {
         UpdateButton.Click();
-        if (shouldModalCloses)
-        {
-            WaitElementInvisibility();
-        }
-        else
-        {
-            WaitElementVisibility();
-        }
+        // wait: consider a case that click does not close the modal (negative cases - empty mandatory fields)
     }
 
     public void ClickCancel()

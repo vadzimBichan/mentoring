@@ -34,7 +34,7 @@ public class Browser
                 throw new Exception("The browser is not supported");
         }
 
-        newBrowser.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
+        newBrowser.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
         newBrowser.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         newBrowser.Driver.Manage().Window.Maximize();
         

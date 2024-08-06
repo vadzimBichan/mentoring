@@ -5,9 +5,9 @@ namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Modals;
 
 public class AddDashboardDialog : AddModalBase
 {
-    private IWebElement NameInput => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
+    private IWebElement NameInput => GetRootElement.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
 
-    private IWebElement DescriptionInput => Driver.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
+    private IWebElement DescriptionInput => GetRootElement.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
 
     public AddDashboardDialog(IWebDriver driver, By rootLocator) : base(driver, rootLocator)
     {
