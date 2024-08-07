@@ -3,7 +3,6 @@ using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
 using NUnit.Framework.Interfaces;
-using OpenQA.Selenium;
 using System.Net;
 using System.Reflection;
 
@@ -13,13 +12,12 @@ namespace Epam.ReportPortal.Automation.UiTests.Base;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)] // https://docs.nunit.org/articles/nunit/writing-tests/attributes/fixturelifecycle.html
 public abstract class ReportPortalUiTestsBaseWithInstancePerTest
 {
-    protected LoginPageSteps LoginPageSteps => new();
-    private Browser Browser { get; set; }
+    protected LoginPageSteps LoginPageSteps => new(); 
 
     [SetUp]
     public void BeforeEach()
     {
-        Browser = Browser.GetInstance();
+        Browser.GetInstance();
         CreatedResources.GetResources();
     }
 
@@ -30,7 +28,7 @@ public abstract class ReportPortalUiTestsBaseWithInstancePerTest
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var testName = TestContext.CurrentContext.Test.Name;
-            Browser.TakeScreenshot(testName, path);
+            Browser.GetInstance().TakeScreenshot(testName, path);
         }
         Browser.Close();
         try

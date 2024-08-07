@@ -17,7 +17,6 @@ public class CreateDashboardsUiTestsBase : ReportPortalUiTestsBaseWithInstancePe
     {
         LoginPageSteps.OpenLoginPage();
         LoginPageSteps.LoginWithTestUser();
-        Assert.Fail();
 
         AllDashboardsSteps.ValidatePageTitle("Report Portal");
         var dashboardName = StringUtils.GenerateRandomString(dashboardNameLength);

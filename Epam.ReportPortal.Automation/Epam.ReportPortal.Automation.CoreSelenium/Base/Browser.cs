@@ -30,16 +30,16 @@ public class Browser
             {
                 "Chrome" => new ChromeDriver(),
                 "Firefox" => new FirefoxDriver(),
-                _ => throw new Exception("The browser is not supported")
+                _ => throw new Exception("The browser is not supported.")
             };
         }
-        else
+        else // use [java -jar selenium-server-<version>.jar standalone] to start locally without deep involvement in hub and nodes
         {
             DriverOptions options = configuration.BrowserType switch
             {
                 "Chrome" => new ChromeOptions(),
                 "Firefox" => new ChromeOptions(),
-                _ => throw new Exception("The browser is not supported")
+                _ => throw new Exception("The browser is not supported.")
             };
 
             newBrowser.Driver = new RemoteWebDriver(new Uri(configuration.GridUrl), options);
