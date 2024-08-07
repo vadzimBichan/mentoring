@@ -5,18 +5,22 @@ using System.Net;
 using Epam.ReportPortal.Automation.ApiModels.CommonModels;
 using Epam.ReportPortal.Automation.ApiModels.ResponseModels;
 using Epam.ReportPortal.Automation.ApiModels.RequestModels;
+using Epam.ReportPortal.Automation.ApiBusinessLayer;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards.Smoke;
 
-public class DashboardCrudApiTests
+public class DashboardCrudApiTests : IDisposable
 {
-    public DashboardApiSteps DashboardsApiSteps => new();
+    public DashboardApiSteps DashboardsApiSteps => new(_testName);
+
+    private readonly string _testName;
 
     public DashboardCrudApiTests()
     {
-        var dashboardName = $"DN_{StringUtils.GenerateRandomString(10)}";
-        var dashboardDescription = $"DD_{StringUtils.GenerateRandomString(20)}";
-        DashboardsApiSteps.CreateDashboard(dashboardName, dashboardDescription);
+        _testName = nameof(DashboardCrudApiTests);
+        CreatedResources.GetResources(_testName);
+        CreateTestDashboard();
+        CreateTestDashboard();
     }
 
     [Fact]
@@ -28,7 +32,9 @@ public class DashboardCrudApiTests
 
         var contentString = response.Content.ReadAsStringAsync().Result;
         var dashboards = JsonConvert.DeserializeObject<DashboardGetAllResponseModels>(contentString).Dashboards;
-        Assert.True(dashboards.Count > 0);
+        Assert.NotEmpty(dashboards);
+        Assert.True(dashboards.All(x=>x.Name != string.Empty));
+        Assert.True(dashboards.All(x => x.Owner != string.Empty));
     }
 
     [Fact]
@@ -36,13 +42,15 @@ public class DashboardCrudApiTests
     public void ItIsPossibleToGetDashboardById()
     {
         var dashboards = DashboardsApiSteps.GetDashboardsList();
-        var dashboardId = dashboards.First().Id;
+        var dashboardId = dashboards.Last().Id;
         var response = DashboardsApiSteps.GetDashboardRequest(dashboardId);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var contentString = response.Content.ReadAsStringAsync().Result;
         var dashboard = JsonConvert.DeserializeObject<DashboardModel>(contentString);
-        Assert.True(dashboard.Name.Length >= 3);
+        Assert.NotNull(dashboard);
+        Assert.NotEmpty(dashboard.Name);
+        Assert.NotEmpty(dashboard.Description);
     }
 
     [Fact]
@@ -51,17 +59,17 @@ public class DashboardCrudApiTests
     {
         var dashboardName = StringUtils.GenerateRandomString(10);
         var dashboardDescription = StringUtils.GenerateRandomString(20);
-        var initialDashboardsCount = DashboardsApiSteps.GetDashboardsCount();
         var dashboardModel = new DashboardCreateRequestModel { Name = dashboardName, Description = dashboardDescription };
         var response = DashboardsApiSteps.CreateDashboardRequest(dashboardModel);
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
         var contentString = response.Content.ReadAsStringAsync().Result;
         var createdDashboardId = JsonConvert.DeserializeObject<IdModel>(contentString).Value;
-        Assert.Equal(initialDashboardsCount + 1, DashboardsApiSteps.GetDashboardsCount());
+        CreatedResources.GetResources(_testName).Dashboards.Add(createdDashboardId);
 
         // check created dashboard details
         var createdDashboard = DashboardsApiSteps.GetDashboardById(createdDashboardId);
+        Assert.NotNull(createdDashboard);
         Assert.Equal(dashboardName, createdDashboard.Name);
         Assert.Equal(dashboardDescription, createdDashboard.Description);
         Assert.Equal(createdDashboardId, createdDashboard.Id);
@@ -74,14 +82,13 @@ public class DashboardCrudApiTests
     public void ItIsPossibleToDeleteDashboardById()
     {
         var dashboards = DashboardsApiSteps.GetDashboardsList();
-        var dashboardId = dashboards.First().Id;
+        var dashboardId = dashboards.Last().Id;
         var response = DashboardsApiSteps.DeleteDashboardRequest(dashboardId);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var contentString = response.Content.ReadAsStringAsync().Result; ;
         var message = JsonConvert.DeserializeObject<MessageModel>(contentString).Value;
         Assert.Equal($"Dashboard with ID = '{dashboardId}' successfully deleted.", message);
-        Assert.Equal(dashboards.Count - 1, DashboardsApiSteps.GetDashboardsCount());
 
         // check deleted dashboard details
         response = DashboardsApiSteps.GetDashboardRequest(dashboardId);
@@ -93,7 +100,7 @@ public class DashboardCrudApiTests
     public void ItIsPossibleToUpdateDashboard()
     {
         var dashboards = DashboardsApiSteps.GetDashboardsList();
-        var dashboardId = dashboards.First().Id;
+        var dashboardId = dashboards.Last().Id;
         var newDashboardName = StringUtils.GenerateRandomString(10);
         var newDashboardDescription = StringUtils.GenerateRandomString(10);
         var dashboardModel = new DashboardUpdateRequestModel { Name = newDashboardName, Description = newDashboardDescription };
@@ -103,7 +110,6 @@ public class DashboardCrudApiTests
         var contentString = response.Content.ReadAsStringAsync().Result;
         var message = JsonConvert.DeserializeObject<MessageModel>(contentString).Value;
         Assert.Equal($"Dashboard with ID = '{dashboardId}' successfully updated", message);
-        Assert.Equal(dashboards.Count, DashboardsApiSteps.GetDashboardsCount());
 
         // check updated dashboard details
         var updatedDashboard = DashboardsApiSteps.GetDashboardById(dashboardId);
@@ -112,5 +118,37 @@ public class DashboardCrudApiTests
         Assert.True(updatedDashboard.Id > 0);
         Assert.Equal("default", updatedDashboard.Owner); // user name
         Assert.Empty(updatedDashboard.Widgets); 
+    }
+
+    private void CreateTestDashboard()
+    {
+        var dashboardName = $"DN_{StringUtils.GenerateRandomString(10)}";
+        var dashboardDescription = $"DD_{StringUtils.GenerateRandomString(20)}";
+        DashboardsApiSteps.CreateDashboard(dashboardName, dashboardDescription);
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            var dashboardIds = CreatedResources.GetResources(_testName).Dashboards;
+            foreach (var dashboardId in dashboardIds)
+            {
+                var deleteResponse = DashboardsApiSteps.DeleteDashboardRequest(dashboardId);
+                if (deleteResponse.StatusCode != HttpStatusCode.OK)
+                    throw new Exception($"Dashboard with id = '{dashboardId}' was not deleted! Response status code = '{deleteResponse.StatusCode}'.");
+                var getResponse = DashboardsApiSteps.GetDashboardRequest(dashboardId);
+                if (getResponse.StatusCode != HttpStatusCode.NotFound)
+                    throw new Exception($"Dashboard with id = '{dashboardId}'still exists! Response status code = '{getResponse.StatusCode}'.");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            CreatedResources.CleanDashboards(_testName);
+        }
     }
 }

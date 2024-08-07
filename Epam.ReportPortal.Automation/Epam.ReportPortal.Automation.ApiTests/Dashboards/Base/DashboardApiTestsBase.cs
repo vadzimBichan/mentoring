@@ -1,38 +1,42 @@
 ﻿using System.Net;
+using Epam.ReportPortal.Automation.ApiBusinessLayer;
 using Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
 
 namespace Epam.ReportPortal.Automation.ApiTests.Dashboards.Base;
 
 public abstract class DashboardApiTestsBase : IDisposable
 {
-    protected DashboardApiSteps DashboardsApiSteps => new();
+    private readonly string _testName;
+    protected DashboardApiSteps DashboardsApiSteps => new(_testName);
+
+    protected DashboardApiTestsBase(string testName)
+    {
+        _testName = testName;
+        CreatedResources.GetResources(testName);
+    }
 
     public void Dispose()
     {
         try
         {
-            var dashboardIds = DashboardsApiSteps.GetDashboardsList().Select(x => x.Id);
+            var dashboardIds = CreatedResources.GetResources(_testName).Dashboards;
             foreach (var dashboardId in dashboardIds)
             {
-                var response = DashboardsApiSteps.DeleteDashboardRequest(dashboardId);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Thread.Sleep(100);
+                var deleteResponse = DashboardsApiSteps.DeleteDashboardRequest(dashboardId);
+                if (deleteResponse.StatusCode != HttpStatusCode.OK)
+                    throw new Exception($"Dashboard with id = '{dashboardId}' was not deleted! Response status code = '{deleteResponse.StatusCode}'.");
+                var getResponse = DashboardsApiSteps.GetDashboardRequest(dashboardId);
+                if (getResponse.StatusCode != HttpStatusCode.NotFound)
+                    throw new Exception($"Dashboard with id = '{dashboardId}' still exists! Response status code = '{getResponse.StatusCode}'.");
             }
-
-            var maxAttempts = 3;
-            var attempt = 0;
-            while (DashboardsApiSteps.GetDashboardsCount() > 0 && attempt < maxAttempts)
-            {
-                Thread.Sleep(1000);
-                attempt++;
-            }
-
-            if (DashboardsApiSteps.GetDashboardsCount() > 0)
-                throw new Exception("Not all dashboards have been successfully removed.");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
+        }
+        finally
+        {
+            CreatedResources.CleanDashboards(_testName);
         }
     }
 }

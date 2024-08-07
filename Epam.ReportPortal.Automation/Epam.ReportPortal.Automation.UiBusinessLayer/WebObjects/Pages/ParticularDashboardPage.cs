@@ -1,28 +1,47 @@
 ﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Components;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Modals;
 using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
-public class ParticularDashboardPage : BaseWebPage
+public class ParticularDashboardPage : WebPage
 {
-    public LeftPanelComponent LeftPanel = new ();
+    public LeftSidebarComponent SidebarMenu => new(Driver, By.CssSelector("aside[class*='sidebar__sidebar']"));
 
-    public IWebElement AddNewWidgetButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
+    public AddDashboardDialog AddDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
-    public IWebElement DashboardNameLabel => Driver.FindElement(By.XPath("//ul[contains(@class, 'pageBreadcrumbs__page-breadcrumbs')]/li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')][2]/span"));
+    public EditDashboardDialog EditDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
-    public IWebElement EditDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
+    public DeleteDashboardDialog DeleteDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
-    public IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Delete')]"));
+    public WidgetsContainer WidgetsContainer => new WidgetsContainer(Driver, By.CssSelector("div[class*='widgets-grid']"));
 
-    public IWebElement EditDashboardDialogHeader => Driver.FindElement(By.CssSelector("span[class*='modalHeader__modal-title']"));
-    
-    public IWebElement NameInput => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
+    private IWebElement DashboardNameLabel => Driver.FindElement(By.XPath("//li[contains(@class, 'pageBreadcrumbs__page-breadcrumbs-item')]/span[@title]"));
 
-    public IWebElement DescriptionInput => Driver.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
+    private IWebElement AddNewWidgetButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add new widget')]"));
 
-    public IWebElement UpdateButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Update')]"));
+    private IWebElement EditDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Edit')]]"));
 
-    public IWebElement CancelButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Cancel')]"));
+    private IWebElement DeleteDashboardButton => Driver.FindElement(By.XPath("//button[.//span[contains(text(), 'Delete')]]"));
+
+    public void ClickAddNewWidgetButton()
+    {
+        AddNewWidgetButton.Click();
+    }
+
+    public void ClickEditDashboardButton()
+    {
+        EditDashboardButton.Click();
+    }
+
+    public void ClickDeleteDashboardButton()
+    {
+        DeleteDashboardButton.Click();
+    }
+
+    public string GetDashboardNameInBreadcrumbs()
+    {
+        return DashboardNameLabel.Text;
+    }
 }

@@ -1,36 +1,31 @@
 ﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Components;
+using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Modals;
 using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
 
-public class AllDashboardsPage : BaseWebPage
+public class AllDashboardsPage : WebPage
 {
-    public LeftPanelComponent LeftPanel = new();
+    public LeftSidebarComponent SidebarMenu => new LeftSidebarComponent(Driver, By.CssSelector("aside[class*='sidebar__sidebar']"));
 
-    public IWebElement AddNewDashboardButton => Driver.FindElement(By.CssSelector("div[class*='addDashboardButton']>button"));
+    public AddDashboardDialog AddDashboardDialog => new AddDashboardDialog(Driver, By.CssSelector("div[class*='modalLayout__modal-window']"));
 
-    public IReadOnlyList<IWebElement> DashboardsList => Driver.FindElements(By.CssSelector("div[class*='gridRow__grid-row'][data-id]"));
+    public EditDashboardDialog EditDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']")); // via table
 
-    public IWebElement AddNewDashboardDialogHeader => Driver.FindElement(By.CssSelector("span[class*='modalHeader__modal-title']"));
+    public DeleteDashboardDialog DeleteDashboardDialog => new(Driver, By.CssSelector("div[class*='modalLayout__modal-window']")); // via table
 
-    public IWebElement NameInput => Driver.FindElement(By.CssSelector("input[type='text'][placeholder='Enter dashboard name']"));
+    public DashboardsTable DashboardsTable => new DashboardsTable(Driver, By.CssSelector("div[class*='dashboardTable__dashboard-table']"));
 
-    public IWebElement DescriptionInput => Driver.FindElement(By.CssSelector("textarea[placeholder='Enter dashboard description']"));
-
-    public IWebElement AddButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Add')]"));
-
-    public IWebElement CancelButton => Driver.FindElement(By.XPath("//button[contains(text(), 'Cancel')]"));
+    private IWebElement AddNewDashboardButton => Driver.FindElement(By.CssSelector("div[class*='addDashboardButton']>button"));
 
     public List<(string DashboardName, string DashboardDescription, string DashboardOwner)> GetDashboards()
     {
-        var dashboards = new List<(string DashboardName, string DashboardDescription, string DashboardOwner)>();
-        foreach (var row in DashboardsList)
-            dashboards.Add((
-                row.FindElement(By.XPath(".//a[contains(@class, 'dashboardTable__name')]")).Text,
-                row.FindElement(By.XPath(".//div[contains(@class, 'dashboardTable__description')]")).Text,
-                row.FindElement(By.XPath(".//div[contains(@class, 'dashboardTable__owner')]")).Text));
+        return DashboardsTable.GetDashboards();
+    }
 
-        return dashboards;
+    public void ClickAddNewDashboardButton()
+    {
+        AddNewDashboardButton.Click();
     }
 }

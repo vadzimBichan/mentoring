@@ -7,6 +7,13 @@ namespace Epam.ReportPortal.Automation.ApiBusinessLayer.ApiSteps;
 
 public abstract class BaseApiSteps
 {
+    protected readonly string TestName;
+
+    protected BaseApiSteps (string testName)
+    {
+        TestName = testName;
+    }
+
     public string GetMessageFromResponse(HttpResponseMessage response)
     {
         var contentString = response.Content.ReadAsStringAsync().Result;

@@ -1,22 +1,24 @@
 ﻿using Epam.ReportPortal.Automation.CoreSelenium.Base;
+using FluentAssertions;
 using log4net;
-using NUnit.Framework;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps;
 
-public abstract class BasePageSteps<T> where T : BaseWebPage, new()
+public abstract class BasePageSteps<T> where T : WebPage, new()
 {
-    protected T WebPage { get; } = new();
+    protected Browser Browser => Browser.GetInstance();
+
+    protected T Page { get; } = new();
 
     protected static readonly ILog Log = LogManager.GetLogger(typeof(T));
 
     public void ValidatePageTitle(string expectedTitle)
     {
-        Assert.That(WebPage.GetTitle(), Is.EqualTo(expectedTitle), "Unexpected page title");
+        Page.GetTitle().Should().Be(expectedTitle);
     }
 
     public void ValidatePageUrl(string expectedUrl)
     {
-        Assert.That(WebPage.GetUrl(), Is.EqualTo(expectedUrl), "Unexpected page url");
+        Page.GetUrl().Should().Be(expectedUrl);
     }
 }

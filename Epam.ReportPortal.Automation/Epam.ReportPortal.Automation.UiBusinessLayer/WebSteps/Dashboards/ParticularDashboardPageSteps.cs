@@ -1,6 +1,4 @@
 ﻿using Epam.ReportPortal.Automation.UiBusinessLayer.WebObjects.Pages;
-using NUnit.Framework;
-using OpenQA.Selenium;
 
 namespace Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 
@@ -9,58 +7,80 @@ public class ParticularDashboardPageSteps : BasePageSteps<ParticularDashboardPag
     public void CloseEditDashboardDialog()
     {
         Log.Info("Closing edit dashboard dialog");
-        WebPage.CancelButton.Click();
-        WebPage.WaitTillPageLoad();
-        WebPage.WaitTillAjaxLoad();
+
+        Page.EditDashboardDialog.CLickClose();
+        Browser.WaitTillAjaxLoad();
+    }
+
+    public bool IsDeleteDashboardDialogOpened()
+    {
+        Log.Info("Getting delete dialog visibility");
+
+        return Page.DeleteDashboardDialog.IsDialogVisible();
+    }
+
+    public void CloseDeleteDashboardDialog()
+    {
+        Log.Info("Closing delete dashboard dialog");
+
+        Page.DeleteDashboardDialog.CLickClose();
+        Browser.WaitTillAjaxLoad();
     }
 
     public bool IsEditDashboardDialogOpened()
     {
-        Log.Info("Checking edit dialog visibility");
-        try
-        {
-            return WebPage.EditDashboardDialogHeader.Displayed;
-        }
-        catch (NoSuchElementException)
-        {
-            return false;
-        }
-        catch (StaleElementReferenceException)
-        {
-            return false;
-        }
+        Log.Info("Getting edit dialog visibility");
+
+        return Page.EditDashboardDialog.IsDialogVisible();
     }
 
     public int GetWidgetsCount()
     {
         Log.Info("Getting widgets count");
-        return -1;
+
+        return Page.WidgetsContainer.GetWidgetsCount();
     }
 
-    public void CheckDashboardNameInBreadcrumbs(string expectedDashboardName)
+    public string GetDashboardNameInBreadcrumbs()
     {
-        Log.Info("Checking dashboard name in breadcrumbs");
-        var actualDashboardName = WebPage.DashboardNameLabel.Text;
-        Assert.That(actualDashboardName, Is.EqualTo(expectedDashboardName.ToUpper()),
-            $"Dashboard name in breadcrumbs should be '{expectedDashboardName.ToUpper()}' instead of '{actualDashboardName}'!");
+        Log.Info("Getting dashboard name in breadcrumbs");
+
+        return Page.GetDashboardNameInBreadcrumbs();
     }
 
     public void EditDashboardNameAndDescription(string? newDashboardName = null, string? newDashboardDescription = null)
     {
         Log.Info("Updating dashboard name and description");
-        WebPage.EditDashboardButton.Click();
+
+        Page.ClickEditDashboardButton();
         if (newDashboardName != null)
         {
-            WebPage.NameInput.Clear();
-            WebPage.NameInput.SendKeys(newDashboardName);
+            Page.EditDashboardDialog.SetNameInputValue(newDashboardName);
         }
 
         if (newDashboardDescription != null)
         {
-            WebPage.DescriptionInput.Clear();
-            WebPage.DescriptionInput.SendKeys(newDashboardDescription);
+            Page.EditDashboardDialog.SetDescriptionInputValue(newDashboardDescription);
         }
-        WebPage.UpdateButton.Click();
-        WebPage.WaitTillAjaxLoad();
+        Page.EditDashboardDialog.ClickUpdate();
+        Browser.WaitTillAjaxLoad();
+    }
+
+    public void DeleteDashboard()
+    {
+        Log.Info("Deleting dashboard");
+
+        TryDeleteDashboard();
+        Page.DeleteDashboardDialog.ClickDelete(); // confirm delete
+        Browser.WaitTillPageLoad();
+        Browser.WaitTillAjaxLoad();
+    }
+
+    public void TryDeleteDashboard()
+    {
+        Log.Info("Deleting dashboard");
+
+        Page.ClickDeleteDashboardButton();
+        Browser.WaitTillAjaxLoad();
     }
 }

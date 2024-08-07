@@ -6,6 +6,10 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
 public class DeleteDashboardApiTests : DashboardApiTestsBase
 {
+    public DeleteDashboardApiTests() : base(nameof(DeleteDashboardApiTests))
+    {
+    }
+
     [Fact]
     public void ItIsImpossibleToDeleteDashboardTwoTimes()
     {

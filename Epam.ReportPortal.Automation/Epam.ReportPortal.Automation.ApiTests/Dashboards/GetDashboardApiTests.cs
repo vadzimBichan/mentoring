@@ -6,6 +6,10 @@ namespace Epam.ReportPortal.Automation.ApiTests.Dashboards;
 
 public class GetDashboardApiTests : DashboardApiTestsBase
 {
+    public GetDashboardApiTests() : base(nameof(GetDashboardApiTests))
+    {
+    }
+
     [Fact]
     public void ItIsImpossibleToGetNotExistingDashboard()
     {

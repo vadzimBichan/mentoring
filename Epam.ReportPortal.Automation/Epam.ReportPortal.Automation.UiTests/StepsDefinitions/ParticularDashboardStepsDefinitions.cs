@@ -36,7 +36,8 @@ public sealed class ParticularDashboardStepsDefinitions
     [Then(@"Dashboard name is still displayed as '([^']*)' on the Dashboard Page")]
     public void ThenDashboardNameIsDisplayedAsOnTheDashboardPage(string dashboardName)
     {
-        ParticularDashboardPageSteps.CheckDashboardNameInBreadcrumbs(dashboardName.ToUpper());
+        Assert.That(ParticularDashboardPageSteps.GetDashboardNameInBreadcrumbs(), Is.EqualTo(dashboardName.ToUpper()),
+            "Breadcrumbs should have expected value");
     }
 
     [Then(@"Edit dialog is closed on the Dashboard Page")]
