@@ -192,4 +192,22 @@ public class Browser
     }
 
     public Screenshot GetScreenshot => ((ITakesScreenshot)Driver).GetScreenshot();
+
+    public void TakeScreenshot(string name, string path)
+    {
+        var timestamp = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+        var fileName = $"{name}_{timestamp}.png";
+        var filePath = Path.Combine(path, fileName);
+
+        try
+        {
+            var screenshot = GetScreenshot;
+            screenshot.SaveAsFile(filePath);
+            TestContext.Progress.WriteLine($"Screenshot saved: {filePath}.");
+        }
+        catch (Exception ex)
+        {
+            TestContext.Progress.WriteLine($"Error taking screenshot: {ex.Message}.");
+        }
+    }
 }

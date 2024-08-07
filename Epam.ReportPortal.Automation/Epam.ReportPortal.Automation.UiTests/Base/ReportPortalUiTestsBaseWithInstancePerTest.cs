@@ -2,7 +2,10 @@
 using Epam.ReportPortal.Automation.CoreSelenium.Base;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Dashboards;
 using Epam.ReportPortal.Automation.UiBusinessLayer.WebSteps.Models;
+using NUnit.Framework.Interfaces;
+using OpenQA.Selenium;
 using System.Net;
+using System.Reflection;
 
 namespace Epam.ReportPortal.Automation.UiTests.Base;
 
@@ -11,19 +14,25 @@ namespace Epam.ReportPortal.Automation.UiTests.Base;
 public abstract class ReportPortalUiTestsBaseWithInstancePerTest
 {
     protected LoginPageSteps LoginPageSteps => new();
+    private Browser Browser { get; set; }
 
     [SetUp]
     public void BeforeEach()
     {
-        Browser.GetInstance();
+        Browser = Browser.GetInstance();
         CreatedResources.GetResources();
     }
 
     [TearDown]
     public void AfterEach()
     {
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+        {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var testName = TestContext.CurrentContext.Test.Name;
+            Browser.TakeScreenshot(testName, path);
+        }
         Browser.Close();
-
         try
         {
             var dashboardsApiSteps = new DashboardApiSteps(string.Empty);
@@ -32,13 +41,13 @@ public abstract class ReportPortalUiTestsBaseWithInstancePerTest
                 var response = dashboardsApiSteps.DeleteDashboardRequest(dashboardId);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    throw new Exception($"Dashboard with id = '{dashboardId}' was not deleted! Response status code = '{response.StatusCode}'");
+                    throw new Exception($"Dashboard with id = '{dashboardId}' was not deleted! Response status code = '{response.StatusCode}'.");
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            TestContext.Progress.WriteLine(ex.Message);
         }
         finally
         {
